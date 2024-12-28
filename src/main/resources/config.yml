@@ -1,0 +1,227 @@
+# MySQL Ayarları
+mysql:
+  enabled: true
+  host: localhost
+  port: 3306
+  database: database
+  username: user
+  password: pass
+  table-prefix: mh_
+
+# Genel Ayarlar
+settings:
+  default-lobby: lobby2
+  server-check-interval: 100 # Tick cinsinden (20 tick = 1 saniye)
+  allow-block-break: false
+  allow-block-place: false
+  allow-pvp: false
+  disable-hunger: true
+  disable-weather: true
+  double-jump:
+    enabled: true
+    power: 1.5
+    height: 1.0
+
+# Skorboard Ayarları
+scoreboard:
+  enabled: true
+  title: '&b&lmultihubcore'
+  update-interval: 20 # Tick cinsinden
+  lines:
+    - '&7'
+    - '&fLobiniz: &a%lobby%'
+    - '&fOyuncular: &a%online%&7/&c%max%'
+    - '&7'
+    - '&fSunucular:'
+    - '&a► &fSkyblock: %skyblock_status%'
+    - '&a► &fSurvival: %survival_status%'
+    - '&a► &fPvP: %pvp_status%'
+    - '&7'
+    - '&emultihubcore.com'
+
+# Menü Ayarları
+menus:
+  server-selector:
+    title: '&8» &bSunucu Seçici'
+    size: 27 # 9'un katları olmalı
+    fill-empty: true
+    empty-material: GRAY_STAINED_GLASS_PANE
+  
+  lobby-selector:
+    title: '&8» &bLobi Seçici'
+    size: 27
+    fill-empty: true
+    empty-material: GRAY_STAINED_GLASS_PANE
+
+# Lobi Eşyaları
+items:
+  server-selector:
+    material: COMPASS
+    display-name: '&b&lSunucu Seçici'
+    slot: 0
+    permission: ''
+    lore:
+      - '&7Sunucular arasında'
+      - '&7geçiş yapmak için tıkla!'
+  
+  lobby-selector:
+    material: NETHER_STAR
+    display-name: '&b&lLobi Seçici'
+    slot: 4
+    permission: ''
+    lore:
+      - '&7Lobiler arasında'
+      - '&7geçiş yapmak için tıkla!'
+  
+  player-hider:
+    material: BLAZE_ROD
+    display-name: '&b&lOyuncu Gizleme'
+    slot: 8
+    permission: ''
+    lore:
+      - '&7Diğer oyuncuları gizlemek'
+      - '&7için tıkla!'
+
+# Sunucu Ayarları
+servers:
+  skyblock:
+    display-name: '&b&lSkyBlock'
+    address: 5.180.104.126
+    port: 25565
+    slot: 11
+    permission: ''
+    icon:
+      material: GRASS_BLOCK
+    description:
+      - '&7'
+      - '&fDurum: %online%'
+      - '&7'
+      - '&aTıkla ve katıl!'
+  
+  survival:
+    display-name: '&b&lSurvival'
+    address: 127.0.0.1
+    port: 25567
+    slot: 13
+    permission: ''
+    icon:
+      material: DIAMOND_PICKAXE
+    description:
+      - '&7'
+      - '&fDurum: %online%'
+      - '&7'
+      - '&aTıkla ve katıl!'
+  
+  pvp:
+    display-name: '&b&lPvP'
+    address: 127.0.0.1
+    port: 25568
+    slot: 15
+    permission: multihub.pvp
+    icon:
+      material: DIAMOND_SWORD
+    description:
+      - '&7'
+      - '&fDurum: %online%'
+      - '&7'
+      - '&aTıkla ve katıl!'
+
+# Lobi Ayarları
+lobbies:
+  lobby1:
+    display-name: '&b&lLobi 1'
+    permission: ''
+    max-players: 50
+    slot: 11
+    spawn:
+      world: spawn
+      x: 0.5
+      y: 100
+      z: 0.5
+      yaw: 0
+      pitch: 0
+    icon:
+      material: PAPER
+    description:
+      - '&7'
+      - '&fOyuncular: &a%online%&7/&c%max%'
+      - '&7'
+      - '&aTıkla ve katıl!'
+    particle-effects:
+      enabled: true
+      type: HEART
+      interval: 20
+  lobby2:
+    display-name: '&b&lLobi 2'
+    permission: ''
+    max-players: 50
+    slot: 15
+    spawn:
+      world: asd
+      x: 0.5
+      y: 100
+      z: 0.5
+      yaw: 0
+      pitch: 0
+    icon:
+      material: PAPER
+    description:
+      - '&7'
+      - '&fOyuncular: &a%online%&7/&c%max%'
+      - '&7'
+      - '&aTıkla ve katıl!'
+    particle-effects:
+      enabled: true
+      type: HEART
+      interval: 20
+
+holograms:
+  hologram1:
+    location:
+      world: spawn
+      x: -107
+      y: 70
+      z: -82
+      yaw: 0
+      pitch: 0
+    lines:
+      - sdad
+      - sdad
+
+# Efekt Ayarları
+effects:
+  join:
+    enabled: true
+    sound: entity_enderman_teleport
+    volume: 1.0
+    pitch: 1.0
+  
+  switch:
+    enabled: true
+    sound: entity_enderman_teleport
+    volume: 1.0
+    pitch: 1.0
+  
+  double-jump:
+    enabled: true
+    sound: entity_enderman_teleport
+    volume: 1.0
+    pitch: 1.0
+
+# Mesaj Ayarları
+messages:
+  prefix: '&8[&bMultiHub&8] &7'
+  no-permission: '%prefix%&cBu işlem için yetkiniz yok!'
+  server-offline: '%prefix%&cBu sunucu şu anda kapalı!'
+  server-connect: '%prefix%&a%server% &7sunucusuna bağlanılıyor...'
+  lobby-full: '%prefix%&cBu lobi dolu!'
+  lobby-set: '%prefix%&a%lobby% &7lobisinin spawn noktası ayarlandı!'
+  lobby-welcome: '%prefix%&7Hoşgeldin &a%player%&7! &a%lobby% &7lobisindeki oyuncularla
+    eğlencenin tadını çıkar!'
+  invalid-lobby: '%prefix%&cBöyle bir lobi bulunamadı!'
+  join:
+    enabled: true
+    format: '&8[&a+&8] &7%player%'
+  quit:
+    enabled: true
+    format: '&8[&c-&8] &7%player%'

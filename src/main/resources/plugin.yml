@@ -1,0 +1,13 @@
+name: MultiHubCore
+version: '${project.version}'
+main: net.cengiz1.multihubcore.MultiHubCore
+api-version: '1.20'
+commands:
+  lobby:
+   description: lobby command
+  setlobby:
+    permission: hubcore.admin
+  hub:
+    description: hub command
+  spawn:
+    description: spawn command
