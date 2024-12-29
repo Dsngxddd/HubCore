@@ -38,7 +38,7 @@ public class MultiHubCore extends JavaPlugin {
         if (getConfig().getBoolean("mysql.enabled")) {
             setupDatabase();
         }
-        getLogger().info("MultiHubCore başarıyla aktif edildi!");
+        getLogger().info("IumMultiHubCore başarıyla aktif edildi!");
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MultiHubCore extends JavaPlugin {
             DatabaseManager.getInstance().disconnect();
         }
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
-        getLogger().info("MultiHubCore devre dışı bırakıldı!");
+        getLogger().info("IumMultiHubCore devre dışı bırakıldı!");
     }
 
     private void registerListeners() {

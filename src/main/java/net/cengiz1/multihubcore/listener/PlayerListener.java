@@ -2,6 +2,7 @@ package net.cengiz1.multihubcore.listener;
 
 import net.cengiz1.multihubcore.MultiHubCore;
 import net.cengiz1.multihubcore.manager.DatabaseManager;
+import net.cengiz1.multihubcore.manager.ItemManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,6 +34,7 @@ public class PlayerListener implements Listener {
         if (plugin.getConfig().getBoolean("mysql.enabled")) {
             updatePlayerStats(event.getPlayer());
         }
+        plugin.getItemManager().giveLobbyItems(event.getPlayer());
     }
 
     @EventHandler

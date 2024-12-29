@@ -10,7 +10,7 @@ mysql:
 
 # Genel Ayarlar
 settings:
-  default-lobby: lobby2
+  default-lobby: lobby1
   server-check-interval: 100 # Tick cinsinden (20 tick = 1 saniye)
   allow-block-break: false
   allow-block-place: false
@@ -25,8 +25,8 @@ settings:
 # Skorboard Ayarları
 scoreboard:
   enabled: true
-  title: '&b&lmultihubcore'
-  update-interval: 20 # Tick cinsinden
+  title: '&b&lIumMultiHubCore'
+  update-interval: 20
   lines:
     - '&7'
     - '&fLobiniz: &a%lobby%'
@@ -34,19 +34,19 @@ scoreboard:
     - '&7'
     - '&fSunucular:'
     - '&a► &fSkyblock: %skyblock_status%'
-    - '&a► &fSurvival: %survival_status%'
+    - '&a► &fSurvival: %lobby1_status%'
     - '&a► &fPvP: %pvp_status%'
     - '&7'
-    - '&emultihubcore.com'
+    - '&eiumproject.com'
 
 # Menü Ayarları
 menus:
   server-selector:
     title: '&8» &bSunucu Seçici'
-    size: 27 # 9'un katları olmalı
+    size: 27 #
     fill-empty: true
     empty-material: GRAY_STAINED_GLASS_PANE
-  
+
   lobby-selector:
     title: '&8» &bLobi Seçici'
     size: 27
@@ -61,9 +61,9 @@ items:
     slot: 0
     permission: ''
     lore:
-      - '&7Sunucular arasında'
+      - '&7Lobiler arasında'
       - '&7geçiş yapmak için tıkla!'
-  
+
   lobby-selector:
     material: NETHER_STAR
     display-name: '&b&lLobi Seçici'
@@ -72,7 +72,7 @@ items:
     lore:
       - '&7Lobiler arasında'
       - '&7geçiş yapmak için tıkla!'
-  
+
   player-hider:
     material: BLAZE_ROD
     display-name: '&b&lOyuncu Gizleme'
@@ -85,18 +85,16 @@ items:
 # Sunucu Ayarları
 
 servers:
-  skyblock:
-    display-name: "&eSkyBlock"
-    server-name: "skyblock"    # BungeeCord'daki sunucu adı
-    address: "localhost"       # Sunucu IP adresi
-    port: 25567               # Sunucu portu
-
   lobby1:
-    display-name: "&aLobi 1"
-    server-name: "lobby2"
-    address: "localhost"
+    display-name: '&aLobi 1'
+    server-name: lobby1
+    address: localhost
     port: 25566
-
+  skyblock:
+    display-name: '&eSkyBlock'
+    server-name: lobby2 # BungeeCord/Velocity sunucu adı
+    address: localhost # Sunucu IP adresi
+    port: 25567 # Sunucu portu
 # Lobi Ayarları
 lobbies:
   lobby1:
@@ -104,6 +102,7 @@ lobbies:
     permission: ''
     max-players: 50
     slot: 11
+    server-name: lobby1 # BungeeCord/Velocity sunucu adı
     spawn:
       world: spawn
       x: 0.5
@@ -127,8 +126,9 @@ lobbies:
     permission: ''
     max-players: 50
     slot: 15
+    server-name: lobby2
     spawn:
-      world: asd
+      world: spawn
       x: 0.5
       y: 100
       z: 0.5

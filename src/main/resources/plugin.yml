@@ -1,4 +1,4 @@
-name: MultiHubCore
+name: IumMultiHubCore
 version: '${project.version}'
 main: net.cengiz1.multihubcore.MultiHubCore
 api-version: '1.20'
