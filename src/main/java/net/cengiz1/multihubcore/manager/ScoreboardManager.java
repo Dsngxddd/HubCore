@@ -2,6 +2,7 @@ package net.cengiz1.multihubcore.manager;
 
 import net.cengiz1.multihubcore.MultiHubCore;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -39,9 +40,25 @@ public class ScoreboardManager {
                     .replace("&", "§");
 
             // Sunucu durumlarını ekle
-            for (ServerInfo server : plugin.getServerManager().getServers().values()) {
-                String status = server.isOnline() ? "§aAKTİF" : "§cKAPALI";
-                line = line.replace("%" + server.getId() + "_status%", status);
+            ConfigurationSection serversSection = plugin.getConfig().getConfigurationSection("servers");
+            if (serversSection != null) {
+                for (String serverId : serversSection.getKeys(false)) {
+                    String status;
+                    try {
+                        String host = plugin.getConfig().getString("servers." + serverId + ".address");
+                        int port = plugin.getConfig().getInt("servers." + serverId + ".port", 25565);
+
+                        if (host != null && !host.isEmpty()) {
+                            status = plugin.getServerManager().isServerOnline(serverId) ? "§aAKTİF" : "§cKAPALI";
+                        } else {
+                            status = "§cHATA";
+                        }
+                    } catch (Exception e) {
+                        status = "§cHATA";
+                    }
+
+                    line = line.replace("%" + serverId + "_status%", status);
+                }
             }
 
             Score score = obj.getScore(line);

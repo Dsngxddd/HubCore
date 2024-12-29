@@ -1,6 +1,6 @@
 # MySQL Ayarları
 mysql:
-  enabled: true
+  enabled: false
   host: localhost
   port: 3306
   database: database
@@ -83,48 +83,19 @@ items:
       - '&7için tıkla!'
 
 # Sunucu Ayarları
+
 servers:
   skyblock:
-    display-name: '&b&lSkyBlock'
-    address: 5.180.104.126
-    port: 25565
-    slot: 11
-    permission: ''
-    icon:
-      material: GRASS_BLOCK
-    description:
-      - '&7'
-      - '&fDurum: %online%'
-      - '&7'
-      - '&aTıkla ve katıl!'
-  
-  survival:
-    display-name: '&b&lSurvival'
-    address: 127.0.0.1
-    port: 25567
-    slot: 13
-    permission: ''
-    icon:
-      material: DIAMOND_PICKAXE
-    description:
-      - '&7'
-      - '&fDurum: %online%'
-      - '&7'
-      - '&aTıkla ve katıl!'
-  
-  pvp:
-    display-name: '&b&lPvP'
-    address: 127.0.0.1
-    port: 25568
-    slot: 15
-    permission: multihub.pvp
-    icon:
-      material: DIAMOND_SWORD
-    description:
-      - '&7'
-      - '&fDurum: %online%'
-      - '&7'
-      - '&aTıkla ve katıl!'
+    display-name: "&eSkyBlock"
+    server-name: "skyblock"    # BungeeCord'daki sunucu adı
+    address: "localhost"       # Sunucu IP adresi
+    port: 25567               # Sunucu portu
+
+  lobby1:
+    display-name: "&aLobi 1"
+    server-name: "lobby2"
+    address: "localhost"
+    port: 25566
 
 # Lobi Ayarları
 lobbies:

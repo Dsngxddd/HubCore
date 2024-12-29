@@ -46,23 +46,34 @@ public class LobbyManager {
     }
 
     public void teleportToLobby(Player player, String lobbyId) {
-        // Eğer lobi yerel sunucudaysa
-        Location spawn = lobbySpawns.get(lobbyId);
-        if (spawn != null) {
+        // Önce BungeeCord kontrolü yapalım
+        String serverName = plugin.getConfig().getString("lobbies." + lobbyId + ".server-name");
+        if (serverName != null && !serverName.isEmpty()) {
+            // İzin kontrolü
             String permission = plugin.getConfig().getString("lobbies." + lobbyId + ".permission", "");
             if (!permission.isEmpty() && !player.hasPermission(permission)) {
-                String noPermMsg = plugin.getConfig().getString("messages.no-permission")
+                String noPermMsg = plugin.getConfig().getString("messages.no-permission", "&cBuna izniniz yok!")
                         .replace("&", "§");
                 player.sendMessage(noPermMsg);
                 return;
             }
-            int maxPlayers = plugin.getConfig().getInt("lobbies." + lobbyId + ".max-players");
+
+            // Oyuncu sayısı kontrolü
+            int maxPlayers = plugin.getConfig().getInt("lobbies." + lobbyId + ".max-players", 100);
             if (getLobbyPlayerCount(lobbyId) >= maxPlayers) {
-                String fullMsg = plugin.getConfig().getString("messages.lobby-full")
+                String fullMsg = plugin.getConfig().getString("messages.lobby-full", "&cBu lobi dolu!")
                         .replace("&", "§");
                 player.sendMessage(fullMsg);
                 return;
             }
+
+            sendPlayerToServer(player, serverName);
+            return;
+        }
+
+        // Eğer server-name yoksa, yerel spawn noktasına ışınla
+        Location spawn = lobbySpawns.get(lobbyId);
+        if (spawn != null) {
             player.teleport(spawn);
             playerLobby.put(player.getUniqueId(), lobbyId);
             plugin.getItemManager().giveLobbyItems(player);
@@ -72,37 +83,36 @@ public class LobbyManager {
             }
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
 
-            String welcomeMsg = plugin.getConfig().getString("messages.lobby-welcome")
+            String welcomeMsg = plugin.getConfig().getString("messages.lobby-welcome", "&aHoş geldiniz!")
                     .replace("%player%", player.getName())
-                    .replace("%lobby%", plugin.getConfig().getString("lobbies." + lobbyId + ".display-name"))
+                    .replace("%lobby%", plugin.getConfig().getString("lobbies." + lobbyId + ".display-name", lobbyId))
                     .replace("&", "§");
             player.sendMessage(welcomeMsg);
-            return;
-        }
-
-        // Eğer lobi başka bir sunucudaysa
-        String serverName = plugin.getConfig().getString("lobbies." + lobbyId + ".server-name");
-        if (serverName != null && !serverName.isEmpty()) {
-            sendPlayerToServer(player, serverName);
         } else {
-            String errorMsg = plugin.getConfig().getString("messages.lobby-not-found")
+            String errorMsg = plugin.getConfig().getString("messages.lobby-not-found", "&cLobi bulunamadı!")
                     .replace("&", "§");
             player.sendMessage(errorMsg);
         }
     }
-
     private void sendPlayerToServer(Player player, String serverName) {
         try {
+            plugin.getLogger().info("Sending player " + player.getName() + " to server: " + serverName); // Debug log
+
             ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
             DataOutputStream out = new DataOutputStream(byteArray);
+
             out.writeUTF("Connect");
             out.writeUTF(serverName);
 
             player.sendPluginMessage(plugin, "BungeeCord", byteArray.toByteArray());
-            player.sendMessage("Sunucuya ışınlanıyorsunuz: " + serverName); // Hata ayıklama amaçlı mesaj
+            String transferMsg = plugin.getConfig().getString("messages.server-transfer", "&aSunucuya aktarılıyorsunuz...")
+                    .replace("&", "§");
+            player.sendMessage(transferMsg);
         } catch (Exception e) {
-            Bukkit.getLogger().severe("Oyuncuyu başka bir sunucuya gönderirken hata oluştu: " + e.getMessage());
-            player.sendMessage("Sunucuya bağlanılamadı.");
+            plugin.getLogger().severe("Failed to send player to server: " + e.getMessage());
+            String errorMsg = plugin.getConfig().getString("messages.transfer-failed", "&cSunucuya bağlanılamadı!")
+                    .replace("&", "§");
+            player.sendMessage(errorMsg);
         }
     }
 
