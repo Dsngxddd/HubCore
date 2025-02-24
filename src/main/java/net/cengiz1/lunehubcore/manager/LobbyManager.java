@@ -1,6 +1,6 @@
-package net.cengiz1.multihubcore.manager;
+package net.cengiz1.lunehubcore.manager;
 
-import net.cengiz1.multihubcore.MultiHubCore;
+import net.cengiz1.lunehubcore.LuneHubCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -14,11 +14,11 @@ import java.util.Map;
 import java.util.UUID;
 
 public class LobbyManager {
-    private final MultiHubCore plugin;
+    private final LuneHubCore plugin;
     private final Map<String, Location> lobbySpawns;
     private final Map<UUID, String> playerLobby;
 
-    public LobbyManager(MultiHubCore plugin) {
+    public LobbyManager(LuneHubCore plugin) {
         this.plugin = plugin;
         this.lobbySpawns = new HashMap<>();
         this.playerLobby = new HashMap<>();
@@ -46,10 +46,8 @@ public class LobbyManager {
     }
 
     public void teleportToLobby(Player player, String lobbyId) {
-        // Önce BungeeCord kontrolü yapalım
         String serverName = plugin.getConfig().getString("lobbies." + lobbyId + ".server-name");
         if (serverName != null && !serverName.isEmpty()) {
-            // İzin kontrolü
             String permission = plugin.getConfig().getString("lobbies." + lobbyId + ".permission", "");
             if (!permission.isEmpty() && !player.hasPermission(permission)) {
                 String noPermMsg = plugin.getConfig().getString("messages.no-permission", "&cBuna izniniz yok!")
@@ -57,8 +55,6 @@ public class LobbyManager {
                 player.sendMessage(noPermMsg);
                 return;
             }
-
-            // Oyuncu sayısı kontrolü
             int maxPlayers = plugin.getConfig().getInt("lobbies." + lobbyId + ".max-players", 100);
             if (getLobbyPlayerCount(lobbyId) >= maxPlayers) {
                 String fullMsg = plugin.getConfig().getString("messages.lobby-full", "&cBu lobi dolu!")
@@ -71,7 +67,6 @@ public class LobbyManager {
             return;
         }
 
-        // Eğer server-name yoksa, yerel spawn noktasına ışınla
         Location spawn = lobbySpawns.get(lobbyId);
         if (spawn != null) {
             player.teleport(spawn);

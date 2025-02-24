@@ -1,4 +1,3 @@
-# MySQL Ayarları
 mysql:
   enabled: false
   host: localhost
@@ -7,29 +6,34 @@ mysql:
   username: user
   password: pass
   table-prefix: mh_
-
-# Genel Ayarlar
+performance:
+  prevent-rapid-menu-opening: true  
+  menu-cooldown: 1000  
+  player-count-timeout: 30 
 settings:
-  default-lobby: lobby1
-  server-check-interval: 100 # Tick cinsinden (20 tick = 1 saniye)
+  default-lobby: lobi-1
+  server-check-interval: 10000 
   allow-block-break: false
   allow-block-place: false
   allow-pvp: false
   disable-hunger: true
   disable-weather: true
+  enable-server-redirect: false
+  disable-block-interactions: true
   double-jump:
-    enabled: true
+    enabled: false
     power: 1.5
     height: 1.0
 
-# Skorboard Ayarları
+chat:
+  locked: false
 scoreboard:
-  enabled: true
-  title: '&b&lIumMultiHubCore'
+  enabled: false
+  title: '&b&lLuneHub'
   update-interval: 20
   lines:
     - '&7'
-    - '&fLobiniz: &a%lobby%'
+    - '&fLobin: &a%lobby%'
     - '&fOyuncular: &a%online%&7/&c%max%'
     - '&7'
     - '&fSunucular:'
@@ -37,15 +41,15 @@ scoreboard:
     - '&a► &fSurvival: %lobby1_status%'
     - '&a► &fPvP: %pvp_status%'
     - '&7'
-    - '&eiumproject.com'
-
-# Menü Ayarları
+    - '&eLunecraft.net'
 menus:
   server-selector:
-    title: '&8» &bSunucu Seçici'
-    size: 27 #
+    title: '&8» &bOyun Seçici'
+    size: 27
     fill-empty: true
     empty-material: GRAY_STAINED_GLASS_PANE
+    auto-refresh-player-count: true
+    status-format: "&8[%status%&8]"
 
   lobby-selector:
     title: '&8» &bLobi Seçici'
@@ -53,146 +57,162 @@ menus:
     fill-empty: true
     empty-material: GRAY_STAINED_GLASS_PANE
 
-# Lobi Eşyaları
 items:
   server-selector:
     material: COMPASS
-    display-name: '&b&lSunucu Seçici'
+    display-name: '&b&lOyun Seçici'
     slot: 0
     permission: ''
     lore:
-      - '&7Lobiler arasında'
-      - '&7geçiş yapmak için tıkla!'
-
-  lobby-selector:
-    material: NETHER_STAR
-    display-name: '&b&lLobi Seçici'
-    slot: 4
-    permission: ''
-    lore:
-      - '&7Lobiler arasında'
-      - '&7geçiş yapmak için tıkla!'
+      - '&7Tıkla ve seç'
 
   player-hider:
     material: BLAZE_ROD
-    display-name: '&b&lOyuncu Gizleme'
+    display-name: '&b&lOyuncu Gizleyici'
     slot: 8
     permission: ''
     lore:
-      - '&7Diğer oyuncuları gizlemek'
-      - '&7için tıkla!'
+      - '&7Tıkla ve gizle'
 
-# Sunucu Ayarları
 
 servers:
-  lobby1:
-    display-name: '&aLobi 1'
-    server-name: lobby1
-    address: localhost
-    port: 25566
-  skyblock:
-    display-name: '&eSkyBlock'
-    server-name: lobby2 # BungeeCord/Velocity sunucu adı
-    address: localhost # Sunucu IP adresi
-    port: 25567 # Sunucu portu
-# Lobi Ayarları
+  towny-1:
+    display-name: "&bTowny 1"
+    offline-display-name: "&c⚠ &7Towny 1"
+    server-name: "towny-1" 
+    address: "10.0.1.7" 
+    port: 11255 
+    slot: 11  
+    visible: true  
+    enable-redirect: true  
+    use-command: true  
+    command: "queue towny-1" 
+    info-message: "&eTowny-1 sunucusuna gitmek için &b/queue towny-1&e komutunu kullanabilirsiniz."
+    icon:
+      material: "GRASS_BLOCK" 
+      offline-material: "RED_WOOL" 
+      glowing: true 
+    description: 
+      - "&7Towny oyun modu sunucusu"
+      - "&7Çevrimiçi Oyuncular: &a%player_count%"
+      - ""
+      - "&eOynamak için tıkla!"
+
+  towny-2:
+    display-name: "&bTowny 2"
+    offline-display-name: "&c⚠ &7Towny 2"
+    server-name: "towny-2"
+    address: "10.0.1.7"
+    port: 11256
+    slot: 13 
+    enable-redirect: true  
+    visible: true
+    use-command: true
+    command: "queue towny-2"
+    info-message: "&eTowny-2 sunucusuna gitmek için &b/queue towny-2&e komutunu kullanabilirsiniz."
+    icon:
+      material: "GRASS_BLOCK"
+      offline-material: "RED_WOOL"
+      glowing: true
+    description:
+      - "&7Towny oyun modu sunucusu"
+      - "&7Çevrimiçi Oyuncular: &a%player_count%"
+      - ""
+      - "&eOynamak için tıkla!"
+
 lobbies:
   lobby1:
-    display-name: '&b&lLobi 1'
+    display-name: '&b&lLobi -1'
     permission: ''
-    max-players: 50
+    max-players: 500
     slot: 11
-    server-name: lobby1 # BungeeCord/Velocity sunucu adı
+    server-name: lobby1 
     spawn:
-      world: spawn
-      x: 0.5
-      y: 100
-      z: 0.5
-      yaw: 0
-      pitch: 0
+      world: world
+      x: 1.5
+      y: 50.0
+      z: -9.5
+      yaw: 89.99772644042969
+      pitch: -0.5999864935874939
     icon:
       material: PAPER
     description:
       - '&7'
-      - '&fOyuncular: &a%online%&7/&c%max%'
+      - '&fOyuncu: &a%online%&7/&c%max%'
       - '&7'
-      - '&aTıkla ve katıl!'
-    particle-effects:
-      enabled: true
-      type: HEART
-      interval: 20
-  lobby2:
-    display-name: '&b&lLobi 2'
-    permission: ''
-    max-players: 50
-    slot: 15
-    server-name: lobby2
-    spawn:
-      world: spawn
-      x: 0.5
-      y: 100
-      z: 0.5
-      yaw: 0
-      pitch: 0
-    icon:
-      material: PAPER
-    description:
-      - '&7'
-      - '&fOyuncular: &a%online%&7/&c%max%'
-      - '&7'
-      - '&aTıkla ve katıl!'
+      - '&aTıkla ve katıl'
     particle-effects:
       enabled: true
       type: HEART
       interval: 20
 
-holograms:
-  hologram1:
-    location:
-      world: spawn
-      x: -107
-      y: 70
-      z: -82
-      yaw: 0
-      pitch: 0
-    lines:
-      - sdad
-      - sdad
-
-# Efekt Ayarları
 effects:
   join:
     enabled: true
     sound: entity_enderman_teleport
     volume: 1.0
     pitch: 1.0
-  
+
   switch:
     enabled: true
     sound: entity_enderman_teleport
     volume: 1.0
     pitch: 1.0
-  
+
   double-jump:
     enabled: true
     sound: entity_enderman_teleport
     volume: 1.0
     pitch: 1.0
 
-# Mesaj Ayarları
 messages:
-  prefix: '&8[&bMultiHub&8] &7'
+  prefix: '&8[&bLuneHub&8] &7'
   no-permission: '%prefix%&cBu işlem için yetkiniz yok!'
-  server-offline: '%prefix%&cBu sunucu şu anda kapalı!'
+  server-offline: '%prefix%&cBu sunucu şu anda çevrimdışı!'
+  server-online: "&aAKTİF"
   server-connect: '%prefix%&a%server% &7sunucusuna bağlanılıyor...'
   lobby-full: '%prefix%&cBu lobi dolu!'
-  lobby-set: '%prefix%&a%lobby% &7lobisinin spawn noktası ayarlandı!'
-  lobby-welcome: '%prefix%&7Hoşgeldin &a%player%&7! &a%lobby% &7lobisindeki oyuncularla
-    eğlencenin tadını çıkar!'
+  lobby-set: '%prefix%&a%lobby% &7lobi doğum noktası ayarlandı!'
+  lobby-welcome: '%prefix%&7Hoşgeldin &a%player%&7! &a%lobby% &7lobisinde iyi vakit geçir!'
   invalid-lobby: '%prefix%&cBöyle bir lobi bulunamadı!'
+  server-transfer: "&aSunucuya aktarılıyorsunuz: %server%"
+  server-info: "&eBu sunucuya gitmek için &b/queue %server%&e komutunu kullanın."
+  execute-command: "&aKomut çalıştırılıyor: %command%"
+  chat-locked: "&cSohbet şu anda kilitli! Sadece yetkililer konuşabilir."
+  chat-locked-broadcast: "&c&lSohbet kilitlendi! Sadece yetkililer konuşabilir."
+  chat-unlocked-broadcast: "&a&lSohbet kilidi açıldı! Herkes konuşabilir."
+  chat-lock-format: "&8[&e!&8] %message% &7(%announcer%)"
   join:
     enabled: true
     format: '&8[&a+&8] &7%player%'
   quit:
     enabled: true
     format: '&8[&c-&8] &7%player%'
+
+# SONRAKİ GÜNCELLEME
+
+npcs:
+  example-npc:
+    name: "&6Dükkan Sahibi"
+    skin: "Notch"
+    location:
+      world: "world"
+      x: 0
+      y: 64
+      z: 0
+      yaw: 0
+      pitch: 0
+    command: "shop"
+
+holograms:
+  welcome:
+    location:
+      world: "world"
+      x: 0
+      y: 65
+      z: 0
+    lines:
+      - "&6Sunucuya hoşgeldin!"
+      - "&7Çevrimiçi oyuncular: %online%"
+    placeholders:
+      online: "0"

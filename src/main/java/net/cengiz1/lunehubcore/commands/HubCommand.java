@@ -1,15 +1,15 @@
-package net.cengiz1.multihubcore.commands;
+package net.cengiz1.lunehubcore.commands;
 
-import net.cengiz1.multihubcore.MultiHubCore;
+import net.cengiz1.lunehubcore.LuneHubCore;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SpawnCommand implements CommandExecutor {
-    private final MultiHubCore plugin;
+public class HubCommand implements CommandExecutor {
+    private final LuneHubCore plugin;
 
-    public SpawnCommand(MultiHubCore plugin) {
+    public HubCommand(LuneHubCore plugin) {
         this.plugin = plugin;
     }
 
@@ -21,8 +21,8 @@ public class SpawnCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        String currentLobby = plugin.getLobbyManager().getPlayerLobby(player);
-        plugin.getLobbyManager().teleportToLobby(player, currentLobby);
+        String defaultLobby = plugin.getConfig().getString("settings.default-lobby");
+        plugin.getLobbyManager().teleportToLobby(player, defaultLobby);
 
         return true;
     }

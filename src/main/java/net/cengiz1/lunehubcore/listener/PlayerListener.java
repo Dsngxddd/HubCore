@@ -1,8 +1,9 @@
-package net.cengiz1.multihubcore.listener;
+package net.cengiz1.lunehubcore.listener;
 
-import net.cengiz1.multihubcore.MultiHubCore;
-import net.cengiz1.multihubcore.manager.DatabaseManager;
-import net.cengiz1.multihubcore.manager.ItemManager;
+import net.cengiz1.lunehubcore.LuneHubCore;
+import net.cengiz1.lunehubcore.manager.DatabaseManager;
+import net.cengiz1.lunehubcore.manager.ItemManager;
+import net.cengiz1.lunehubcore.manager.PlayerHiderManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,9 +16,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PlayerListener implements Listener {
-    private final MultiHubCore plugin;
+    private final LuneHubCore plugin;
 
-    public PlayerListener(MultiHubCore plugin) {
+    public PlayerListener(LuneHubCore plugin) {
         this.plugin = plugin;
     }
 
@@ -51,16 +52,35 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
         ItemStack item = event.getItem();
-        if (item == null) return;
-        String itemName = item.getItemMeta().getDisplayName();
-        if (itemName.equals(plugin.getConfig().getString("items.server-selector.display-name").replace("&", "§"))) {
+        if (item == null || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) return;
+
+        String itemName = item.getItemMeta().getDisplayName().replace("&", "§");
+        PlayerHiderManager playerHiderManager = plugin.getPlayerHiderManager();
+
+        String serverSelectorName = plugin.getConfig().getString("items.server-selector.display-name");
+        if (serverSelectorName != null && itemName.equals(serverSelectorName.replace("&", "§"))) {
             event.setCancelled(true);
-            plugin.getMenuManager().openServerSelector(event.getPlayer());
+            plugin.getMenuManager().openServerSelector(player);
+            return;
         }
-        if (itemName.equals(plugin.getConfig().getString("items.lobby-selector.display-name").replace("&", "§"))) {
+
+        String lobbySelectorName = plugin.getConfig().getString("items.lobby-selector.display-name");
+        if (lobbySelectorName != null && itemName.equals(lobbySelectorName.replace("&", "§"))) {
             event.setCancelled(true);
-            plugin.getMenuManager().openLobbySelector(event.getPlayer());
+            plugin.getMenuManager().openLobbySelector(player);
+            return;
+        }
+
+        String playerHiderName = plugin.getConfig().getString("items.player-hider.display-name");
+        if (playerHiderName != null && itemName.equals(playerHiderName.replace("&", "§"))) {
+            event.setCancelled(true);
+            if (playerHiderManager.isHidingPlayers(player)) {
+                playerHiderManager.showPlayers(player);
+            } else {
+                playerHiderManager.hidePlayers(player);
+            }
         }
     }
 

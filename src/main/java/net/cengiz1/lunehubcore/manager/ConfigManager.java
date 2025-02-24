@@ -1,17 +1,17 @@
-package net.cengiz1.multihubcore.manager;
+package net.cengiz1.lunehubcore.manager;
 
-import net.cengiz1.multihubcore.MultiHubCore;
+import net.cengiz1.lunehubcore.LuneHubCore;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
 public class ConfigManager {
-    private final MultiHubCore plugin;
+    private final LuneHubCore plugin;
     private File configFile;
     private FileConfiguration config;
 
-    public ConfigManager(MultiHubCore plugin) {
+    public ConfigManager(LuneHubCore plugin) {
         this.plugin = plugin;
         setupConfig();
     }

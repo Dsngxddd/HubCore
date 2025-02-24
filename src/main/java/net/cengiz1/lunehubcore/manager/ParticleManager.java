@@ -1,6 +1,6 @@
-package net.cengiz1.multihubcore.manager;
+package net.cengiz1.lunehubcore.manager;
 
-import net.cengiz1.multihubcore.MultiHubCore;
+import net.cengiz1.lunehubcore.LuneHubCore;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ParticleManager {
-    private final MultiHubCore plugin;
+    private final LuneHubCore plugin;
     private final Map<UUID, Integer> playerEffects;
 
-    public ParticleManager(MultiHubCore plugin) {
+    public ParticleManager(LuneHubCore plugin) {
         this.plugin = plugin;
         this.playerEffects = new HashMap<>();
     }

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/LuneHubCore.iml" filepath="$PROJECT_DIR$/LuneHubCore.iml" />
       <module fileurl="file://$PROJECT_DIR$/MultiHubCore.iml" filepath="$PROJECT_DIR$/MultiHubCore.iml" />
     </modules>
   </component>

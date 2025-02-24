@@ -1,4 +1,4 @@
-package net.cengiz1.multihubcore.manager;
+package net.cengiz1.lunehubcore.manager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

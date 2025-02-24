@@ -1,15 +1,15 @@
-package net.cengiz1.multihubcore.commands;
+package net.cengiz1.lunehubcore.commands;
 
-import net.cengiz1.multihubcore.MultiHubCore;
+import net.cengiz1.lunehubcore.LuneHubCore;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class HubCommand implements CommandExecutor {
-    private final MultiHubCore plugin;
+public class ReloadCommand implements CommandExecutor {
+    private final LuneHubCore plugin;
 
-    public HubCommand(MultiHubCore plugin) {
+    public ReloadCommand(LuneHubCore plugin) {
         this.plugin = plugin;
     }
 
@@ -19,11 +19,11 @@ public class HubCommand implements CommandExecutor {
             sender.sendMessage("§cBu komut sadece oyuncular tarafından kullanılabilir!");
             return true;
         }
-
-        Player player = (Player) sender;
-        String defaultLobby = plugin.getConfig().getString("settings.default-lobby");
-        plugin.getLobbyManager().teleportToLobby(player, defaultLobby);
-
+        if (!sender.hasPermission("multihub.reload")) {
+            sender.sendMessage(plugin.getConfig().getString("messages.no-permission").replace("&", "§"));
+            return true;
+        }
+        plugin.getConfigManager().reloadConfig();
         return true;
     }
 }

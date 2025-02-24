@@ -1,6 +1,6 @@
-package net.cengiz1.multihubcore.manager;
+package net.cengiz1.lunehubcore.manager;
 
-import net.cengiz1.multihubcore.MultiHubCore;
+import net.cengiz1.lunehubcore.LuneHubCore;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ItemManager {
-    private final MultiHubCore plugin;
+    private final LuneHubCore plugin;
 
-    public ItemManager(MultiHubCore plugin) {
+    public ItemManager(LuneHubCore plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
-package net.cengiz1.multihubcore.manager;
+package net.cengiz1.lunehubcore.manager;
 
-import net.cengiz1.multihubcore.MultiHubCore;
+import net.cengiz1.lunehubcore.LuneHubCore;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -11,9 +11,9 @@ import org.bukkit.scoreboard.Scoreboard;
 import java.util.List;
 
 public class ScoreboardManager {
-    private final MultiHubCore plugin;
+    private final LuneHubCore plugin;
 
-    public ScoreboardManager(MultiHubCore plugin) {
+    public ScoreboardManager(LuneHubCore plugin) {
         this.plugin = plugin;
         startScoreboardUpdater();
     }
@@ -38,8 +38,6 @@ public class ScoreboardManager {
                     .replace("%online%", String.valueOf(players))
                     .replace("%max%", String.valueOf(maxPlayers))
                     .replace("&", "§");
-
-            // Sunucu durumlarını ekle
             ConfigurationSection serversSection = plugin.getConfig().getConfigurationSection("servers");
             if (serversSection != null) {
                 for (String serverId : serversSection.getKeys(false)) {

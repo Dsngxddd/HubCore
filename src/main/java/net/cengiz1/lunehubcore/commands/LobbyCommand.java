@@ -1,15 +1,15 @@
-package net.cengiz1.multihubcore.commands;
+package net.cengiz1.lunehubcore.commands;
 
-import net.cengiz1.multihubcore.MultiHubCore;
+import net.cengiz1.lunehubcore.LuneHubCore;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class LobbyCommand implements CommandExecutor {
-    private final MultiHubCore plugin;
+    private final LuneHubCore plugin;
 
-    public LobbyCommand(MultiHubCore plugin) {
+    public LobbyCommand(LuneHubCore plugin) {
         this.plugin = plugin;
     }
 

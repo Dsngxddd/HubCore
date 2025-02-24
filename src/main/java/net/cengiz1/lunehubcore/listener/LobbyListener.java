@@ -1,6 +1,6 @@
-package net.cengiz1.multihubcore.listener;
+package net.cengiz1.lunehubcore.listener;
 
-import net.cengiz1.multihubcore.MultiHubCore;
+import net.cengiz1.lunehubcore.LuneHubCore;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
@@ -8,9 +8,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.util.Vector;
 
 public class LobbyListener implements Listener {
-    private final MultiHubCore plugin;
+    private final LuneHubCore plugin;
 
-    public LobbyListener(MultiHubCore plugin) {
+    public LobbyListener(LuneHubCore plugin) {
         this.plugin = plugin;
     }
 
