@@ -1,218 +1,262 @@
 mysql:
   enabled: false
-  host: localhost
+  host: 'localhost'
   port: 3306
-  database: database
-  username: user
-  password: pass
-  table-prefix: mh_
-performance:
-  prevent-rapid-menu-opening: true  
-  menu-cooldown: 1000  
-  player-count-timeout: 30 
+  database: 'hubcore'
+  username: 'root'
+  password: 'password'
+  table-prefix: 'hubcore_'
+
 settings:
-  default-lobby: lobi-1
-  server-check-interval: 10000 
+  default-lobby: 'main'
+  enable-server-redirect: true
   allow-block-break: false
   allow-block-place: false
   allow-pvp: false
   disable-hunger: true
   disable-weather: true
-  enable-server-redirect: false
   disable-block-interactions: true
   double-jump:
-    enabled: false
-    power: 1.5
-    height: 1.0
+    enabled: true
+
+scoreboard:
+  enabled: true
+  title: '&e&lHUB CORE'
+  update-interval: 40
+  lines:
+    - '&7&m-------------------'
+    - '&fİsim: &e%player%'
+    - '&fLobi: &e%lobby%'
+    - '&fOyuncular: &e%online%&7/&c%max%'
+    - '&7&m-------------------'
+    - '&ewww.yourserver.com'
 
 chat:
   locked: false
-scoreboard:
-  enabled: false
-  title: '&b&lLuneHub'
-  update-interval: 20
-  lines:
-    - '&7'
-    - '&fLobin: &a%lobby%'
-    - '&fOyuncular: &a%online%&7/&c%max%'
-    - '&7'
-    - '&fSunucular:'
-    - '&a► &fSkyblock: %skyblock_status%'
-    - '&a► &fSurvival: %lobby1_status%'
-    - '&a► &fPvP: %pvp_status%'
-    - '&7'
-    - '&eLunecraft.net'
-menus:
-  server-selector:
-    title: '&8» &bOyun Seçici'
-    size: 27
-    fill-empty: true
-    empty-material: GRAY_STAINED_GLASS_PANE
-    auto-refresh-player-count: true
-    status-format: "&8[%status%&8]"
-
-  lobby-selector:
-    title: '&8» &bLobi Seçici'
-    size: 27
-    fill-empty: true
-    empty-material: GRAY_STAINED_GLASS_PANE
-
-items:
-  server-selector:
-    material: COMPASS
-    display-name: '&b&lOyun Seçici'
-    slot: 0
-    permission: ''
-    lore:
-      - '&7Tıkla ve seç'
-
-  player-hider:
-    material: BLAZE_ROD
-    display-name: '&b&lOyuncu Gizleyici'
-    slot: 8
-    permission: ''
-    lore:
-      - '&7Tıkla ve gizle'
-
-
-servers:
-  towny-1:
-    display-name: "&bTowny 1"
-    offline-display-name: "&c⚠ &7Towny 1"
-    server-name: "towny-1" 
-    address: "10.0.1.7" 
-    port: 11255 
-    slot: 11  
-    visible: true  
-    enable-redirect: true  
-    use-command: true  
-    command: "queue towny-1" 
-    info-message: "&eTowny-1 sunucusuna gitmek için &b/queue towny-1&e komutunu kullanabilirsiniz."
-    icon:
-      material: "GRASS_BLOCK" 
-      offline-material: "RED_WOOL" 
-      glowing: true 
-    description: 
-      - "&7Towny oyun modu sunucusu"
-      - "&7Çevrimiçi Oyuncular: &a%player_count%"
-      - ""
-      - "&eOynamak için tıkla!"
-
-  towny-2:
-    display-name: "&bTowny 2"
-    offline-display-name: "&c⚠ &7Towny 2"
-    server-name: "towny-2"
-    address: "10.0.1.7"
-    port: 11256
-    slot: 13 
-    enable-redirect: true  
-    visible: true
-    use-command: true
-    command: "queue towny-2"
-    info-message: "&eTowny-2 sunucusuna gitmek için &b/queue towny-2&e komutunu kullanabilirsiniz."
-    icon:
-      material: "GRASS_BLOCK"
-      offline-material: "RED_WOOL"
-      glowing: true
-    description:
-      - "&7Towny oyun modu sunucusu"
-      - "&7Çevrimiçi Oyuncular: &a%player_count%"
-      - ""
-      - "&eOynamak için tıkla!"
-
-lobbies:
-  lobby1:
-    display-name: '&b&lLobi -1'
-    permission: ''
-    max-players: 500
-    slot: 11
-    server-name: lobby1 
-    spawn:
-      world: world
-      x: 1.5
-      y: 50.0
-      z: -9.5
-      yaw: 89.99772644042969
-      pitch: -0.5999864935874939
-    icon:
-      material: PAPER
-    description:
-      - '&7'
-      - '&fOyuncu: &a%online%&7/&c%max%'
-      - '&7'
-      - '&aTıkla ve katıl'
-    particle-effects:
-      enabled: true
-      type: HEART
-      interval: 20
-
-effects:
-  join:
-    enabled: true
-    sound: entity_enderman_teleport
-    volume: 1.0
-    pitch: 1.0
-
-  switch:
-    enabled: true
-    sound: entity_enderman_teleport
-    volume: 1.0
-    pitch: 1.0
-
-  double-jump:
-    enabled: true
-    sound: entity_enderman_teleport
-    volume: 1.0
-    pitch: 1.0
 
 messages:
-  prefix: '&8[&bLuneHub&8] &7'
-  no-permission: '%prefix%&cBu işlem için yetkiniz yok!'
-  server-offline: '%prefix%&cBu sunucu şu anda çevrimdışı!'
-  server-online: "&aAKTİF"
-  server-connect: '%prefix%&a%server% &7sunucusuna bağlanılıyor...'
-  lobby-full: '%prefix%&cBu lobi dolu!'
-  lobby-set: '%prefix%&a%lobby% &7lobi doğum noktası ayarlandı!'
-  lobby-welcome: '%prefix%&7Hoşgeldin &a%player%&7! &a%lobby% &7lobisinde iyi vakit geçir!'
-  invalid-lobby: '%prefix%&cBöyle bir lobi bulunamadı!'
-  server-transfer: "&aSunucuya aktarılıyorsunuz: %server%"
-  server-info: "&eBu sunucuya gitmek için &b/queue %server%&e komutunu kullanın."
-  execute-command: "&aKomut çalıştırılıyor: %command%"
-  chat-locked: "&cSohbet şu anda kilitli! Sadece yetkililer konuşabilir."
-  chat-locked-broadcast: "&c&lSohbet kilitlendi! Sadece yetkililer konuşabilir."
-  chat-unlocked-broadcast: "&a&lSohbet kilidi açıldı! Herkes konuşabilir."
-  chat-lock-format: "&8[&e!&8] %message% &7(%announcer%)"
   join:
     enabled: true
     format: '&8[&a+&8] &7%player%'
   quit:
     enabled: true
     format: '&8[&c-&8] &7%player%'
+  no-permission: '&cBu komutu kullanma yetkiniz yok!'
+  lobby-welcome: '&aHoş geldiniz! &7Şu anda &e%lobby% &7lobisindesiniz.'
+  lobby-not-found: '&cLobi bulunamadı!'
+  lobby-set: '&aLobi konumu &e%lobby% &aiçin ayarlandı!'
+  invalid-lobby: '&cGeçersiz lobi ID!'
+  lobby-full: '&cBu lobi dolu!'
+  server-transfer: '&aSunucuya aktarılıyorsunuz...'
+  transfer-failed: '&cSunucuya bağlanılamadı!'
+  server-online: '&aAKTİF'
+  server-offline: '&cKAPALI'
+  server-info: '&eBu sunucuya gitmek için &b/server %server%&e komutunu kullanın.'
+  chat-locked: '&cSohbet şu anda kilitli! Sadece yetkililer konuşabilir.'
+  chat-locked-broadcast: '&c&lSohbet kilitlendi! Sadece yetkililer konuşabilir.'
+  chat-unlocked-broadcast: '&a&lSohbet kilidi açıldı! Herkes konuşabilir.'
+  chat-lock-format: '&8[&e!&8] %message% &7(%announcer%)'
 
-# SONRAKİ GÜNCELLEME
+lobbies:
+  main:
+    display-name: '&aAna Lobi'
+    description:
+      - '&7Ana lobi'
+      - '&7Buradan oyunlara katılabilirsiniz.'
+    max-players: 100
+    visible: true
+    slot: 0
+    icon:
+      material: 'COMPASS'
+      custom-model-data: 1001
+    permission: ''
+    particle-effects:
+      enabled: true
+      type: 'VILLAGER_HAPPY'
+      interval: 20
+    spawn:
+      world: 'world'
+      x: 0.5
+      y: 64.0
+      z: 0.5
+      yaw: 0.0
+      pitch: 0.0
+  vip:
+    display-name: '&6VIP Lobi'
+    description:
+      - '&7VIP oyuncular için özel lobi'
+      - '&7Burada özel oyunlara katılabilirsiniz.'
+    max-players: 50
+    visible: true
+    slot: 1
+    icon:
+      material: 'DIAMOND'
+      custom-model-data: 1002
+    permission: 'hubcore.vip'
+    particle-effects:
+      enabled: true
+      type: 'FLAME'
+      interval: 10
+    spawn:
+      world: 'world'
+      x: 100.5
+      y: 64.0
+      z: 100.5
+      yaw: 0.0
+      pitch: 0.0
+
+servers:
+  survival:
+    display-name: '&aSurvival'
+    description:
+      - '&7Survival oyun modu'
+      - '&7Oyuncu sayısı: &e%player_count%'
+    server-name: 'survival'
+    address: '127.0.0.1'
+    port: 25566
+    visible: true
+    slot: 0
+    enable-redirect: true
+    icon:
+      material: 'GRASS_BLOCK'
+      custom-model-data: 2001
+      offline-material: 'BARRIER'
+      offline-custom-model-data: 2099
+      glowing: false
+  skyblock:
+    display-name: '&bSkyBlock'
+    description:
+      - '&7SkyBlock oyun modu'
+      - '&7Oyuncu sayısı: &e%player_count%'
+    server-name: 'skyblock'
+    address: '127.0.0.1'
+    port: 25567
+    visible: true
+    slot: 1
+    enable-redirect: true
+    icon:
+      material: 'ENDER_PEARL'
+      custom-model-data: 2002
+      offline-material: 'BARRIER'
+      offline-custom-model-data: 2099
+      glowing: false
+
+items:
+  server-selector:
+    material: 'COMPASS'
+    custom-model-data: 3001
+    display-name: '&eSunucu Seçici'
+    slot: 0
+    permission: ''
+    lore:
+      - '&7Sunucu seçmek için tıkla'
+  lobby-selector:
+    material: 'NETHER_STAR'
+    custom-model-data: 3002
+    display-name: '&bLobi Seçici'
+    slot: 1
+    permission: ''
+    lore:
+      - '&7Lobi seçmek için tıkla'
+  player-hider:
+    material: 'BLAZE_POWDER'
+    custom-model-data: 3003
+    display-name: '&cOyuncu Gizleyici'
+    slot: 8
+    permission: ''
+    lore:
+      - '&7Oyuncuları görmek/gizlemek için tıkla'
+
+menus:
+  server-selector:
+    title: '&8» &eSunucu Seçici'
+    size: 27
+    fill-empty: true
+    empty-material: 'GRAY_STAINED_GLASS_PANE'
+    empty-custom-model-data: 4001
+    auto-refresh-player-count: true
+    status-format: '&8[%status%&8]'
+  lobby-selector:
+    title: '&8» &bLobi Seçici'
+    size: 27
+    fill-empty: true
+    empty-material: 'LIGHT_BLUE_STAINED_GLASS_PANE'
+    empty-custom-model-data: 4002
+
+effects:
+  double-jump:
+    enabled: true
+    sound: 'entity.player.levelup'
+
+vip-messages:
+  vip:
+    permission: 'hubcore.vip'
+    format: '&6★ &e%player% &6sunucuya katıldı! &6★'
+    broadcast: true
+    play-sound: true
+    sound: 'entity.player.levelup'
+    sound-volume: 1.0
+    sound-pitch: 1.0
+  mvp:
+    permission: 'hubcore.mvp'
+    format: '&b✦ &3%player% &bsunucuya katıldı! &b✦'
+    messages:
+      - '&b✦ &3%player% &bsunucuya katıldı! &b✦'
+      - '&b✧ &3%player% &barena savaşlarına hazır! &b✧'
+      - '&b✩ &3%player% &badlı MVP &blobideki yerini aldı! &b✩'
+    broadcast: true
+    play-sound: true
+    sound: 'entity.player.levelup'
+    sound-volume: 0.5
+    sound-pitch: 1.2
+  admin:
+    permission: 'hubcore.admin'
+    format: '&c&l⚠ &4%player% &c&lsunucuya katıldı! &c&l⚠'
+    broadcast: true
+    play-sound: true
+    sound: 'entity.player.levelup'
+    sound-volume: 0.3
+    sound-pitch: 0.8
+
+announcements:
+  enabled: true
+  interval: 300
+  initial-delay: 60
+  random: false
+  prefix: '&8[&e&lDUYURU&8]'
+  sound:
+    enabled: true
+    name: 'entity.player.levelup'
+    volume: 1.0
+    pitch: 1.0
+  formats:
+    - ''
+    - '%prefix% &f%message%'
+    - ''
+  messages:
+    - '&eSunucumuzda &6VIP &eolun! &6/vip &eiçin tıklayın!'
+    - '&bDiscord sunucumuza katılın! &3discord.gg/yourservername'
+    - '&aArkadaşlarınızı davet etmeyi unutmayın!'
+    - '&dOyun kurallarını okumayı unutmayın! &5/rules'
+    - '&6Günlük ödüllerinizi almayı unutmayın! &e/daily'
+
 
 npcs:
-  example-npc:
-    name: "&6Dükkan Sahibi"
-    skin: "Notch"
-    location:
-      world: "world"
-      x: 0
-      y: 64
-      z: 0
-      yaw: 0
-      pitch: 0
-    command: "shop"
-
-holograms:
   welcome:
-    location:
-      world: "world"
-      x: 0
-      y: 65
-      z: 0
-    lines:
-      - "&6Sunucuya hoşgeldin!"
-      - "&7Çevrimiçi oyuncular: %online%"
-    placeholders:
-      online: "0"
+    name: '&e&lHoş Geldiniz'
+    world: 'spawn'
+    x: -113
+    y: 63
+    z: -7
+    yaw: 180.0
+    pitch: 0.0
+    skin: 'Steve'
+    skin-name: ''
+    skin-signature: ''
+    command: 'message:&aHubCore sunucusuna hoş geldiniz!'
+    look-at-player: true
+    hologram: true
+    hologram-lines:
+      - '&e&lSunucu Rehberi'
+      - '&fBana tıklayarak'
+      - '&fyardım alabilirsiniz'

@@ -1,55 +1,66 @@
-name: LuneHubCore
+name: HubCore
 version: 1.0.0
-main: net.cengiz1.lunehubcore.LuneHubCore
-api-version: 1.13
-authors: [cengiz1]
-description: Gelişmiş hub sistemi
+main: net.cengiz1.hubcore.HubCore
+api-version: 1.21
+authors: [Cengiz1]
+description: A comprehensive hub/lobby management system
+depend: [ProtocolLib]
+
 commands:
   lobby:
-    description: Ana lobiye ışınlanın
+    description: Teleport to a lobby
+    usage: /lobby [id]
     aliases: [l]
+
   setlobby:
-    description: Lobi spawn noktasını ayarlayın
+    description: Set a lobby spawn point
+    usage: /setlobby [id]
+    permission: multihub.setlobby
+
   hub:
-    description: Ana lobiye ışınlanın
+    description: Teleport to the main hub
+    usage: /hub
     aliases: [h]
+
   spawn:
-    description: Bulunduğunuz lobinin spawn noktasına ışınlanın
+    description: Teleport to the current lobby spawn
+    usage: /spawn
     aliases: [s]
+
   multihubreload:
-    description: Eklenti yapılandırmasını yeniden yükleyin
-    aliases: [lunehubreload, hubreload]
+    description: Reload the HubCore plugin
+    usage: /multihubreload
+    permission: hubcore.reload
+    aliases: [hreload]
+
   chatlock:
-    description: Sohbeti kilitle veya kilidini aç
-    aliases: [cl, lockChat, chatl]
+    description: Lock or unlock the server chat
     usage: /chatlock
+    permission: hubcore.chatlock
+
+  announce:
+    description: Send an announcement to all players
+    usage: /announce <message> or /announce next
+    permission: hubcore.announce
+
+  npc:
+    description: Manage server NPCs
+    usage: /npc help
+    permission: hubcore.npc
+
 permissions:
-  lunehub.build:
-    description: Blok kırma ve yerleştirme izni
+  hubcore.reload:
+    description: Allows reloading the plugin configuration
     default: op
-  lunehub.admin:
-    description: Tüm LuneHub komutlarını kullanma izni
+
+  hubcore.chatlock:
+    description: Allows locking/unlocking the server chat
     default: op
-    children:
-      lunehub.build: true
-      lunehub.setlobby: true
-      lunehub.reload: true
-      lunehub.chatlock: true
-  lunehub.setlobby:
-    description: Lobi spawn noktasını ayarlama izni
+
+  hubcore.announce:
+    description: Allows sending announcements to all players
     default: op
-  lunehub.reload:
-    description: Eklentiyi yeniden yükleme izni
-    default: op
-  lunehub.chatlock:
-    description: Sohbeti kilitleme ve açma izni
-    default: op
-  lunehub.chatbypass:
-    description: Sohbet kilitliyken bile konuşabilme izni
-    default: op
-  lunehub.interact:
-    description: Düğme, kapı vb. ile etkileşimde bulunma izni
-    default: op
-  lunehub.dropitem:
-    description: Eşya atma izni
+
+  hubcore.npc:
+    description: Allows managing server NPCs
     default: op
