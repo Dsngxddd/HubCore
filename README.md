@@ -2,7 +2,7 @@
 
 ## Sunucunuz İçin Profesyonel Lobi Çözümü
 
-![HubCore Banner](https://imgur.com/a/LlRD7BW)
+![HubCore Banner]([https://imgur.com/a/LlRD7BW](https://imgur.com/a/LlRD7BW))
 
 **Sürüm:** 1.0.0  
 **MC Sürümleri:** 1.21  
