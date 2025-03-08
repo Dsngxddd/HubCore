@@ -29,41 +29,30 @@ public class PlayerListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        // Zamanlama sorununu önlemek için bir gecikme ekleyin
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             try {
                 // Önce VIP mesajları
                 boolean handledByVIP = plugin.getVIPManager().handleVIPJoin(player);
 
-                // Eğer VIP tarafından işlenmediyse ve normal giriş mesajları etkinse
                 if (!handledByVIP && plugin.getConfig().getBoolean("messages.join.enabled")) {
                     String joinMessage = plugin.getConfig().getString("messages.join.format")
                             .replace("%player%", player.getName())
                             .replace("&", "§");
                     event.setJoinMessage(joinMessage);
                 } else if (handledByVIP) {
-                    // VIP mesajı gösterildiyse, varsayılan giriş mesajını temizle
                     event.setJoinMessage(null);
                 }
-
-                // Lobiye ışınlanma
                 String defaultLobby = plugin.getConfig().getString("settings.default-lobby", "main");
                 plugin.getLobbyManager().teleportToLobby(player, defaultLobby);
-
-                // Veritabanı güncelleme
                 if (plugin.getConfig().getBoolean("mysql.enabled")) {
                     updatePlayerStats(player);
                 }
-
-                // Öğeleri verme
                 plugin.getItemManager().giveLobbyItems(player);
-
-                plugin.getLogger().info(player.getName() + " için lobby itemları verildi.");
             } catch (Exception e) {
                 plugin.getLogger().severe("Oyuncu giriş işlemleri sırasında hata: " + e.getMessage());
                 e.printStackTrace();
             }
-        }, 10L); // Yarım saniye gecikme
+        }, 10L);
     }
 
     @EventHandler
@@ -88,40 +77,29 @@ public class PlayerListener implements Listener {
         }
 
         String itemName = item.getItemMeta().getDisplayName();
-        plugin.getLogger().info("Item interaction detected: " + itemName);
-
-        // Event'i her zaman iptal et (oyuncunun başka şeylere tıklamasını engeller)
         event.setCancelled(true);
 
         PlayerHiderManager playerHiderManager = plugin.getPlayerHiderManager();
-
-        // Sunucu seçici
         String serverSelectorName = plugin.getConfig().getString("items.server-selector.display-name");
         if (serverSelectorName != null && itemName.equals(ChatColor.translateAlternateColorCodes('&', serverSelectorName))) {
-            plugin.getLogger().info("Opening server selector...");
             plugin.getMenuManager().openServerSelector(player);
             return;
         }
-
-        // Lobi seçici
         String lobbySelectorName = plugin.getConfig().getString("items.lobby-selector.display-name");
         if (lobbySelectorName != null && itemName.equals(ChatColor.translateAlternateColorCodes('&', lobbySelectorName))) {
             plugin.getLogger().info("Opening lobby selector...");
             plugin.getMenuManager().openLobbySelector(player);
             return;
         }
-
-        // Oyuncu gizleyici
         String playerHiderName = plugin.getConfig().getString("items.player-hider.display-name");
         if (playerHiderName != null && itemName.equals(ChatColor.translateAlternateColorCodes('&', playerHiderName))) {
-            plugin.getLogger().info("Toggling player visibility...");
 
             if (playerHiderManager.isHidingPlayers(player)) {
                 playerHiderManager.showPlayers(player);
-                player.sendMessage(ChatColor.GREEN + "Oyuncular artık görünür.");
+                player.sendMessage(ChatColor.GREEN + "Players are now visible.");
             } else {
                 playerHiderManager.hidePlayers(player);
-                player.sendMessage(ChatColor.RED + "Oyuncular gizlendi.");
+                player.sendMessage(ChatColor.RED + "Players are hidden.");
             }
             return;
         }

@@ -29,7 +29,7 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.RED + "Bu komut sadece oyuncular tarafından kullanılabilir!");
+            sender.sendMessage(ChatColor.RED + "This command is only available to players!");
             return true;
         }
 
@@ -37,7 +37,7 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
 
         if (!player.hasPermission("hubcore.npc")) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    plugin.getConfig().getString("messages.no-permission", "&cBu komutu kullanma yetkiniz yok!")));
+                    plugin.getConfig().getString("messages.no-permission", "&cYou are not authorized to use this command!")));
             return true;
         }
 
@@ -51,14 +51,14 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
         switch (subCommand) {
             case "create":
                 if (args.length < 2) {
-                    player.sendMessage(ChatColor.RED + "Kullanım: /npc create <id> [isim]");
+                    player.sendMessage(ChatColor.RED + "Usage: /npc create <id> [nick]");
                     return true;
                 }
                 createNPC(player, args);
                 break;
             case "remove":
                 if (args.length < 2) {
-                    player.sendMessage(ChatColor.RED + "Kullanım: /npc remove <id>");
+                    player.sendMessage(ChatColor.RED + "Usage: /npc remove <id>");
                     return true;
                 }
                 removeNPC(player, args[1]);
@@ -68,28 +68,28 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
                 break;
             case "setskin":
                 if (args.length < 3) {
-                    player.sendMessage(ChatColor.RED + "Kullanım: /npc setskin <id> <skin>");
+                    player.sendMessage(ChatColor.RED + "Usage: /npc setskin <id> <skin>");
                     return true;
                 }
                 setSkin(player, args[1], args[2]);
                 break;
             case "setcommand":
                 if (args.length < 3) {
-                    player.sendMessage(ChatColor.RED + "Kullanım: /npc setcommand <id> <komut>");
+                    player.sendMessage(ChatColor.RED + "Usage: /npc setcommand <id> <komut>");
                     return true;
                 }
                 setCommand(player, args);
                 break;
             case "teleport":
                 if (args.length < 2) {
-                    player.sendMessage(ChatColor.RED + "Kullanım: /npc teleport <id>");
+                    player.sendMessage(ChatColor.RED + "Usage: /npc teleport <id>");
                     return true;
                 }
                 teleportToNPC(player, args[1]);
                 break;
             case "move":
                 if (args.length < 2) {
-                    player.sendMessage(ChatColor.RED + "Kullanım: /npc move <id>");
+                    player.sendMessage(ChatColor.RED + "Usage: /npc move <id>");
                     return true;
                 }
                 moveNPC(player, args[1]);
@@ -99,14 +99,14 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
                 break;
             case "lookatplayer":
                 if (args.length < 3) {
-                    player.sendMessage(ChatColor.RED + "Kullanım: /npc lookatplayer <id> <true/false>");
+                    player.sendMessage(ChatColor.RED + "Usage: /npc lookatplayer <id> <true/false>");
                     return true;
                 }
                 setLookAtPlayer(player, args[1], Boolean.parseBoolean(args[2]));
                 break;
             case "hologram":
                 if (args.length < 3) {
-                    player.sendMessage(ChatColor.RED + "Kullanım: /npc hologram <id> <add/remove/clear> [text]");
+                    player.sendMessage(ChatColor.RED + "Usage: /npc hologram <id> <add/remove/clear> [text]");
                     return true;
                 }
                 handleHologram(player, args);
@@ -118,28 +118,26 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
 
         return true;
     }
-
     private void sendHelp(Player player) {
-        player.sendMessage(ChatColor.GOLD + "----- HubCore NPC Komutları -----");
-        player.sendMessage(ChatColor.YELLOW + "/npc create <id> [isim] " + ChatColor.GRAY + "- Yeni bir NPC oluşturur");
-        player.sendMessage(ChatColor.YELLOW + "/npc remove <id> " + ChatColor.GRAY + "- Bir NPC'yi kaldırır");
-        player.sendMessage(ChatColor.YELLOW + "/npc list " + ChatColor.GRAY + "- Tüm NPC'leri listeler");
-        player.sendMessage(ChatColor.YELLOW + "/npc setskin <id> <skin> " + ChatColor.GRAY + "- NPC'nin skinini değiştirir");
-        player.sendMessage(ChatColor.YELLOW + "/npc setcommand <id> <komut> " + ChatColor.GRAY + "- NPC'ye komut ekler");
-        player.sendMessage(ChatColor.YELLOW + "/npc teleport <id> " + ChatColor.GRAY + "- NPC'ye ışınlanır");
-        player.sendMessage(ChatColor.YELLOW + "/npc move <id> " + ChatColor.GRAY + "- NPC'yi bulunduğunuz yere taşır");
-        player.sendMessage(ChatColor.YELLOW + "/npc reload " + ChatColor.GRAY + "- NPC'leri yeniden yükler");
-        player.sendMessage(ChatColor.YELLOW + "/npc lookatplayer <id> <true/false> " + ChatColor.GRAY + "- NPC'nin oyuncuya bakmasını ayarlar");
-        player.sendMessage(ChatColor.YELLOW + "/npc hologram <id> <add/remove/clear> [text] " + ChatColor.GRAY + "- NPC üzerinde hologram ekler/siler");
+        player.sendMessage(ChatColor.GOLD + "----- HubCore NPC Command -----");
+        player.sendMessage(ChatColor.YELLOW + "/npc create <id> [name] " + ChatColor.GRAY + "- Creates a new NPC");
+        player.sendMessage(ChatColor.YELLOW + "/npc remove <id> " + ChatColor.GRAY + "- Removes an NPC");
+        player.sendMessage(ChatColor.YELLOW + "/npc list " + ChatColor.GRAY + "- Lists all NPCs");
+        player.sendMessage(ChatColor.YELLOW + "/npc setskin <id> <skin> " + ChatColor.GRAY + "- Changes the skin of an NPC");
+        player.sendMessage(ChatColor.YELLOW + "/npc setcommand <id> <command> " + ChatColor.GRAY + "- Adds a command to an NPC");
+        player.sendMessage(ChatColor.YELLOW + "/npc teleport <id> " + ChatColor.GRAY + "- Teleports to an NPC");
+        player.sendMessage(ChatColor.YELLOW + "/npc move <id> " + ChatColor.GRAY + "- Moves an NPC to your current location");
+        player.sendMessage(ChatColor.YELLOW + "/npc reload " + ChatColor.GRAY + "- Reloads all NPCs");
+        player.sendMessage(ChatColor.YELLOW + "/npc lookatplayer <id> <true/false> " + ChatColor.GRAY + "- Sets whether the NPC looks at players");
+        player.sendMessage(ChatColor.YELLOW + "/npc hologram <id> <add/remove/clear> [text] " + ChatColor.GRAY + "- Adds/removes holograms above an NPC");
     }
-
     private void createNPC(Player player, String[] args) {
         String id = args[1];
         String name = args.length > 2 ? String.join(" ", Arrays.copyOfRange(args, 2, args.length)) : id;
 
         // Check if NPC already exists
         if (plugin.getNPCManager().getNPC(id) != null) {
-            player.sendMessage(ChatColor.RED + "Bu ID'ye sahip bir NPC zaten var: " + id);
+            player.sendMessage(ChatColor.RED + "An NPC with this ID already exists: " + id);
             return;
         }
 
@@ -154,32 +152,32 @@ public class NPCCommand implements CommandExecutor, TabCompleter {
             }
         }
 
-        player.sendMessage(ChatColor.GREEN + "NPC başarıyla oluşturuldu: " + id);
+        player.sendMessage(ChatColor.GREEN + "NPC create: " + id);
     }
 
     private void removeNPC(Player player, String id) {
         HubNPC npc = plugin.getNPCManager().getNPC(id);
         if (npc == null) {
-            player.sendMessage(ChatColor.RED + "Bu ID'ye sahip bir NPC bulunamadı: " + id);
+            player.sendMessage(ChatColor.RED + "No NPC with this ID was found: " + id);
             return;
         }
 
         plugin.getNPCManager().removeNPC(id);
-        player.sendMessage(ChatColor.GREEN + "NPC başarıyla kaldırıldı: " + id);
+        player.sendMessage(ChatColor.GREEN + "NPC successfully removed: " + id);
     }
 
     private void listNPCs(Player player) {
         Collection<HubNPC> npcs = plugin.getNPCManager().getAllNPCs();
         if (npcs.isEmpty()) {
-            player.sendMessage(ChatColor.YELLOW + "Hiç NPC bulunamadı.");
+            player.sendMessage(ChatColor.YELLOW + "No NPCs found.");
             return;
         }
 
-        player.sendMessage(ChatColor.GOLD + "----- NPC Listesi (" + npcs.size() + ") -----");
+        player.sendMessage(ChatColor.GOLD + "----- NPC List (" + npcs.size() + ") -----");
         for (HubNPC npc : npcs) {
             player.sendMessage(ChatColor.YELLOW + npc.getId() + ChatColor.GRAY + " - " +
                     ChatColor.WHITE + npc.getName() + ChatColor.GRAY + " - " +
-                    "Dünya: " + npc.getLocation().getWorld().getName() +
+                    "World: " + npc.getLocation().getWorld().getName() +
                     ", X: " + Math.round(npc.getLocation().getX()) +
                     ", Y: " + Math.round(npc.getLocation().getY()) +
                     ", Z: " + Math.round(npc.getLocation().getZ()));

@@ -27,14 +27,14 @@ public class AnnounceCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            sender.sendMessage(ChatColor.RED + "Kullanım: /announce <mesaj> veya /announce next");
+            sender.sendMessage(ChatColor.RED + "Usage: /announce <message> or /announce next");
             return true;
         }
 
         // Check if the command is to send the next scheduled announcement
         if (args.length == 1 && args[0].equalsIgnoreCase("next")) {
             plugin.getAnnouncementManager().sendNextAnnouncement();
-            sender.sendMessage(ChatColor.GREEN + "Sıradaki otomatik duyuru gönderildi.");
+            sender.sendMessage(ChatColor.GREEN + "The next automatic announcement has been sent.");
             return true;
         }
 
@@ -80,7 +80,7 @@ public class AnnounceCommand implements CommandExecutor {
             }
         }
 
-        sender.sendMessage(ChatColor.GREEN + "Duyuru gönderildi: " + ChatColor.RESET + finalMessage);
+        sender.sendMessage(ChatColor.GREEN + "Sent: " + ChatColor.RESET + finalMessage);
         return true;
     }
 }

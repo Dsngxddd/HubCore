@@ -44,7 +44,6 @@ public class AnnouncementManager {
                 20L * plugin.getConfig().getInt("announcements.initial-delay", 60),
                 20L * interval);
 
-        plugin.getLogger().info("Auto announcements started with interval of " + interval + " seconds");
     }
 
     /**

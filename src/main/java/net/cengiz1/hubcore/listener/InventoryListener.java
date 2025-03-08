@@ -38,8 +38,6 @@ public class InventoryListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         String title = event.getView().getTitle();
 
-        // Her tıklamayı logla (debug için)
-        plugin.getLogger().info("Inventory click detected: " + title);
 
         // Tüm inventory click olaylarında her zaman item alanını kilitliyoruz
         if (event.getClickedInventory() != null && event.getClickedInventory().equals(player.getInventory())) {
@@ -69,7 +67,6 @@ public class InventoryListener implements Listener {
             }
 
             String itemName = itemMeta.getDisplayName();
-            plugin.getLogger().info("Item clicked: " + itemName);
 
             if (title.equals(serverSelectorTitle)) {
                 handleServerSelection(player, itemName);
@@ -85,16 +82,12 @@ public class InventoryListener implements Listener {
             return;
         }
 
-        plugin.getLogger().info("Processing server selection: " + itemName);
-
         for (String serverId : plugin.getConfig().getConfigurationSection("servers").getKeys(false)) {
             String serverDisplayName = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("servers." + serverId + ".display-name", ""));
 
-            plugin.getLogger().info("Checking server: " + serverId + " with display name: " + serverDisplayName);
 
             if (itemName.equals(serverDisplayName)) {
                 String serverName = plugin.getConfig().getString("servers." + serverId + ".server-name", "");
-                plugin.getLogger().info("Sending player to server: " + serverName);
 
                 player.closeInventory();
                 plugin.getServerManager().connectToServer(player, serverId);
@@ -111,15 +104,13 @@ public class InventoryListener implements Listener {
             return;
         }
 
-        plugin.getLogger().info("Processing lobby selection: " + itemName);
+
 
         for (String lobbyId : plugin.getConfig().getConfigurationSection("lobbies").getKeys(false)) {
             String lobbyName = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("lobbies." + lobbyId + ".display-name", ""));
 
-            plugin.getLogger().info("Checking lobby: " + lobbyId + " with display name: " + lobbyName);
 
             if (itemName.equals(lobbyName)) {
-                plugin.getLogger().info("Teleporting to lobby: " + lobbyId);
                 player.closeInventory();
                 plugin.getLobbyManager().teleportToLobby(player, lobbyId);
                 return;

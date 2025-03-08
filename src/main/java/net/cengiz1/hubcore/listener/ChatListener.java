@@ -22,7 +22,7 @@ implements Listener {
         boolean chatLocked = this.plugin.getConfig().getBoolean("chat.locked", false);
         if (chatLocked && !player.isOp() && !player.hasPermission("hubcore.chatbypass")) {
             event.setCancelled(true);
-            String message = this.plugin.getConfig().getString("messages.chat-locked", "&cSohbet \u015fu anda kilitli! Sadece yetkililer konu\u015fabilir.");
+            String message = this.plugin.getConfig().getString("messages.chat-locked", "&cChat is currently locked! Only authorized persons can talk.");
             player.sendMessage(ChatColor.translateAlternateColorCodes((char)'&', (String)message));
         }
     }

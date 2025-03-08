@@ -17,7 +17,7 @@ public class ReloadCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("hubcore.reload")) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    plugin.getConfig().getString("messages.no-permission", "&cBu komutu kullanma yetkiniz yok!")));
+                    plugin.getConfig().getString("messages.no-permission", "&cYou are not authorized to use this command!")));
             return true;
         }
 
@@ -30,7 +30,7 @@ public class ReloadCommand implements CommandExecutor {
             plugin.getAnnouncementManager().reload();
         }
 
-        sender.sendMessage(ChatColor.GREEN + "HubCore başarıyla yeniden yüklendi!");
+        sender.sendMessage(ChatColor.GREEN + "HubCore successfully reinstalled!");
         return true;
     }
 }

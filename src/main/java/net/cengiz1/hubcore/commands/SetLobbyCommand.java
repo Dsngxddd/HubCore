@@ -16,7 +16,7 @@ public class SetLobbyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§cBu komut sadece oyuncular tarafından kullanılabilir!");
+            sender.sendMessage("§cYou are not authorized to use this command!");
             return true;
         }
 

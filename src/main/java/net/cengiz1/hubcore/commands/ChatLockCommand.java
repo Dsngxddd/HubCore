@@ -27,7 +27,7 @@ implements CommandExecutor {
         this.plugin.getConfig().set("chat.locked", (Object)newLockState);
         this.plugin.saveConfig();
         if (newLockState) {
-            sender.sendMessage(ChatColor.GREEN + "Sohbet kilitlendi! Sadece OP yetkisi olanlar konuşabilir.");
+            sender.sendMessage(ChatColor.GREEN + "Chat locked! Only those authorized to OP can talk");
         } else {
             sender.sendMessage(ChatColor.GREEN + "Sohbet kilidi açıldı Herkes konuşabilir.");
         }

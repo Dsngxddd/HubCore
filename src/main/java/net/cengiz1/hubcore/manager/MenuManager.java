@@ -127,7 +127,7 @@ public class MenuManager {
                         icon.setItemMeta(meta);
                     }
                     if (!server.getBoolean("icon.glowing", false) || isOnline) {
-                        // empty if block
+
                     }
                     if ((slot = server.getInt("slot", -1)) < 0 || slot >= size) {
                         for (int i = 0; i < size; ++i) {
@@ -140,9 +140,7 @@ public class MenuManager {
                         inventory.setItem(slot, icon);
                         continue;
                     }
-                    this.plugin.getLogger().warning(serverId + " i\u00e7in uygun slot bulunamad\u0131!");
                 } catch (IllegalArgumentException e) {
-                    this.plugin.getLogger().warning("Ge\u00e7ersiz materyal: " + serverId + " i\u00e7in!");
                 }
             }
         }
@@ -222,7 +220,7 @@ public class MenuManager {
                         }
                         int currentPlayers = this.plugin.getLobbyManager().getLobbyPlayerCount(lobbyId);
                         int maxPlayers = lobby.getInt("max-players", 100);
-                        lore.add("§7Oyuncular: §a" + currentPlayers + "§7/§c" + maxPlayers);
+                        lore.add("§Online: §a" + currentPlayers + "§7/§c" + maxPlayers);
                         meta.setLore(lore);
                         icon.setItemMeta(meta);
                     }
@@ -237,7 +235,6 @@ public class MenuManager {
                         inventory.setItem(slot, icon);
                         continue;
                     }
-                    this.plugin.getLogger().warning(lobbyId + "§euygun slot bulunamadı!");
                 } catch (IllegalArgumentException e) {
                     this.plugin.getLogger().warning("§eGeçersiz materyal: " + lobbyId);
                 }

@@ -31,42 +31,31 @@ public class NPCManager {
     public NPCManager(HubCore plugin) {
         this.plugin = plugin;
 
-        // ProtocolLib kontrolü
-        plugin.getLogger().info("NPC Manager başlatılıyor: ProtocolLib kontrolü...");
+        // ProtocolLib check
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") == null) {
-            plugin.getLogger().severe("ProtocolLib bulunamadı! NPC sistemi devre dışı bırakıldı.");
             return;
         }
 
         try {
             this.protocolManager = ProtocolLibrary.getProtocolManager();
             if (this.protocolManager == null) {
-                plugin.getLogger().severe("ProtocolManager alınamadı! NPC sistemi çalışmayacak.");
                 return;
             }
 
-            plugin.getLogger().info("ProtocolLib başarıyla bulundu, NPCManager başlatılıyor...");
-
-            // Diğer başlatma kodları...
+            // Other initialization code
             this.npcs = new HashMap<>();
             this.visibleNpcs = new ConcurrentHashMap<>();
 
             loadNPCs();
             startUpdateTask();
-
-            plugin.getLogger().info("NPC sistemi başarıyla yüklendi! " + npcs.size() + " NPC bulundu.");
-
         } catch (Exception e) {
-            plugin.getLogger().severe("ProtocolLib başlatılırken hata: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     private void loadNPCs() {
-        plugin.getLogger().info("NPC'ler yükleniyor...");
         ConfigurationSection npcSection = plugin.getConfig().getConfigurationSection("npcs");
         if (npcSection == null) {
-            plugin.getLogger().info("Yapılandırmada NPC'ler bulunamadı.");
             // Create npcs section if it doesn't exist
             plugin.getConfig().createSection("npcs");
             plugin.saveConfig();
@@ -86,7 +75,6 @@ public class NPCManager {
                 float pitch = (float) data.getDouble("pitch");
 
                 if (worldName == null || Bukkit.getWorld(worldName) == null) {
-                    plugin.getLogger().warning("NPC için geçersiz dünya: " + npcId);
                     continue;
                 }
 
@@ -107,22 +95,15 @@ public class NPCManager {
                 }
 
                 npcs.put(npcId, npc);
-                plugin.getLogger().info("NPC Yüklendi: " + npcId + " at " + location.getWorld().getName() + ", " +
-                        x + ", " + y + ", " + z);
             } catch (Exception e) {
-                plugin.getLogger().warning("NPC yüklenemedi: " + npcId);
                 e.printStackTrace();
             }
         }
-
-        plugin.getLogger().info(npcs.size() + " NPC yüklendi.");
     }
 
     public void saveNPC(HubNPC npc) {
         String npcId = npc.getId();
         Location loc = npc.getLocation();
-
-        plugin.getLogger().info("NPC kaydediliyor: " + npcId);
 
         plugin.getConfig().set("npcs." + npcId + ".world", loc.getWorld().getName());
         plugin.getConfig().set("npcs." + npcId + ".x", loc.getX());
@@ -144,15 +125,11 @@ public class NPCManager {
 
         plugin.saveConfig();
         npcs.put(npcId, npc);
-
-        plugin.getLogger().info("NPC kaydedildi: " + npcId);
     }
 
     public void removeNPC(String npcId) {
         HubNPC npc = npcs.remove(npcId);
         if (npc != null) {
-            plugin.getLogger().info("NPC siliniyor: " + npcId);
-
             plugin.getConfig().set("npcs." + npcId, null);
             plugin.saveConfig();
 
@@ -163,10 +140,6 @@ public class NPCManager {
                     despawnNPC(player, npc);
                 }
             }
-
-            plugin.getLogger().info("NPC silindi: " + npcId);
-        } else {
-            plugin.getLogger().warning("Silinecek NPC bulunamadı: " + npcId);
         }
     }
 
@@ -182,8 +155,6 @@ public class NPCManager {
         if (!player.isOnline() || !npc.getLocation().getWorld().equals(player.getWorld())) {
             return;
         }
-
-        plugin.getLogger().info("NPC spawn ediliyor: " + npc.getId() + " için oyuncu: " + player.getName());
 
         if (!visibleNpcs.containsKey(player.getUniqueId())) {
             visibleNpcs.put(player.getUniqueId(), new HashSet<>());
@@ -228,10 +199,7 @@ public class NPCManager {
             try {
                 protocolManager.sendServerPacket(player, spawnPacket);
                 protocolManager.sendServerPacket(player, entityPacket);
-
-                plugin.getLogger().info("NPC spawn paketleri başarıyla gönderildi: " + npc.getId() + " to " + player.getName());
             } catch (Exception e) {
-                plugin.getLogger().severe("NPC paketleri gönderilirken hata: " + e.getMessage());
                 e.printStackTrace();
                 return;
             }
@@ -245,7 +213,6 @@ public class NPCManager {
                         removeInfo.getPlayerInfoDataLists().write(0, playerInfoDataList);
                         protocolManager.sendServerPacket(player, removeInfo);
                     } catch (Exception e) {
-                        plugin.getLogger().severe("Tab listesinden oyuncu kaldırılırken hata: " + e.getMessage());
                         e.printStackTrace();
                     }
                 }
@@ -259,7 +226,6 @@ public class NPCManager {
                 spawnHologram(player, npc);
             }
         } catch (Exception e) {
-            plugin.getLogger().severe("NPC spawn edilirken hata: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -268,8 +234,6 @@ public class NPCManager {
         if (!player.isOnline()) {
             return;
         }
-
-        plugin.getLogger().info("NPC despawn ediliyor: " + npc.getId() + " için oyuncu: " + player.getName());
 
         try {
             // Remove entity
@@ -288,14 +252,11 @@ public class NPCManager {
                 despawnHologram(player, npc);
             }
         } catch (Exception e) {
-            plugin.getLogger().severe("NPC despawn edilirken hata: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     private void spawnHologram(Player player, HubNPC npc) {
-        plugin.getLogger().info("Hologram spawn ediliyor: " + npc.getId() + " için oyuncu: " + player.getName());
-
         try {
             // Implementation depends on how you want to create holograms
             // This is a basic implementation using armor stands
@@ -351,7 +312,6 @@ public class NPCManager {
                 protocolManager.sendServerPacket(player, metadataPacket);
             }
         } catch (Exception e) {
-            plugin.getLogger().severe("Hologram spawn edilirken hata: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -361,26 +321,20 @@ public class NPCManager {
             return;
         }
 
-        plugin.getLogger().info("Hologram despawn ediliyor: " + npc.getId() + " için oyuncu: " + player.getName());
-
         try {
             PacketContainer destroyPacket = protocolManager.createPacket(PacketType.Play.Server.ENTITY_DESTROY);
             destroyPacket.getIntLists().write(0, npc.getHologramIds());
 
             protocolManager.sendServerPacket(player, destroyPacket);
         } catch (Exception e) {
-            plugin.getLogger().severe("Hologram despawn edilirken hata: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     private void startUpdateTask() {
         if (protocolManager == null) {
-            plugin.getLogger().warning("NPC güncelleme görevi başlatılamadı: ProtocolManager yok");
             return;
         }
-
-        plugin.getLogger().info("NPC güncelleme görevi başlatılıyor...");
 
         if (updateTask != null) {
             updateTask.cancel();
@@ -391,13 +345,10 @@ public class NPCManager {
                 updateNPCsForPlayer(player);
             }
         }, 20L, 20L);
-
-        plugin.getLogger().info("NPC güncelleme görevi başlatıldı");
     }
 
     public void updateNPCsForPlayer(Player player) {
         if (protocolManager == null) {
-            plugin.getLogger().warning("ProtocolManager null olduğu için NPCler güncellenemiyor");
             return;
         }
 
@@ -425,7 +376,6 @@ public class NPCManager {
                         updateNPCRotation(player, npc);
                     }
                 } catch (Exception e) {
-                    plugin.getLogger().severe("NPC güncellenirken hata: " + npc.getId() + " for " + player.getName());
                     e.printStackTrace();
                 }
             }
@@ -467,18 +417,13 @@ public class NPCManager {
             protocolManager.sendServerPacket(player, rotationPacket);
             protocolManager.sendServerPacket(player, lookPacket);
         } catch (Exception e) {
-            plugin.getLogger().severe("NPC rotasyonu güncellenirken hata: " + npc.getId() + " for " + player.getName());
             e.printStackTrace();
         }
     }
 
     public void handleNPCInteract(Player player, int entityId) {
-        plugin.getLogger().info("NPC etkileşimi: " + player.getName() + " EntityID: " + entityId);
-
         for (HubNPC npc : npcs.values()) {
             if (npc.getEntityId() == entityId) {
-                plugin.getLogger().info("Eşleşen NPC bulundu: " + npc.getId());
-
                 String command = npc.getCommand();
                 if (!command.isEmpty()) {
                     if (command.startsWith("/")) {
@@ -488,41 +433,28 @@ public class NPCManager {
                     // Check for special handling
                     if (command.startsWith("console:")) {
                         String consoleCommand = command.substring(8);
-                        plugin.getLogger().info("Console komutu çalıştırılıyor: " + consoleCommand);
-
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), consoleCommand.replace("%player%", player.getName()));
                     } else if (command.startsWith("message:")) {
                         String message = command.substring(8);
-                        plugin.getLogger().info("Mesaj gönderiliyor: " + message);
-
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
                     } else {
-                        plugin.getLogger().info("Oyuncu komutu çalıştırılıyor: " + command);
-
                         player.chat("/" + command);
                     }
-                } else {
-                    plugin.getLogger().info("NPC'nin komutu yok: " + npc.getId());
                 }
                 return;
             }
         }
-
-        plugin.getLogger().warning("Eşleşen NPC bulunamadı EntityID: " + entityId);
     }
+
     /**
-     * NPC sisteminin düzgün çalışıp çalışmadığını kontrol eder
-     * @return NPC sistemi aktif mi
+     * Checks if the NPC system is working correctly
+     * @return Whether the NPC system is active
      */
     public boolean isEnabled() {
-        boolean enabled = this.protocolManager != null;
-        plugin.getLogger().info("NPC sistemi aktif mi: " + enabled);
-        return enabled;
+        return this.protocolManager != null;
     }
 
     public void shutdown() {
-        plugin.getLogger().info("NPC sistemi kapatılıyor...");
-
         if (updateTask != null) {
             updateTask.cancel();
             updateTask = null;
@@ -537,13 +469,9 @@ public class NPCManager {
 
         npcs.clear();
         visibleNpcs.clear();
-
-        plugin.getLogger().info("NPC sistemi kapatıldı");
     }
 
     public void reload() {
-        plugin.getLogger().info("NPC sistemi yeniden yükleniyor...");
-
         shutdown();
         loadNPCs();
         startUpdateTask();
@@ -552,8 +480,6 @@ public class NPCManager {
         for (Player player : Bukkit.getOnlinePlayers()) {
             updateNPCsForPlayer(player);
         }
-
-        plugin.getLogger().info("NPC sistemi yeniden yüklendi");
     }
 
     /**
@@ -562,7 +488,6 @@ public class NPCManager {
      */
     public void removePlayerVisibility(Player player) {
         if (player != null) {
-            plugin.getLogger().info("Oyuncu görünürlüğü kaldırılıyor: " + player.getName());
             visibleNpcs.remove(player.getUniqueId());
         }
     }

@@ -25,9 +25,9 @@ scoreboard:
   update-interval: 40
   lines:
     - '&7&m-------------------'
-    - '&fİsim: &e%player%'
-    - '&fLobi: &e%lobby%'
-    - '&fOyuncular: &e%online%&7/&c%max%'
+    - '&fName: &e%player%'
+    - '&fLobby: &e%lobby%'
+    - '&fPlayers: &e%online%&7/&c%max%'
     - '&7&m-------------------'
     - '&ewww.yourserver.com'
 
@@ -41,28 +41,28 @@ messages:
   quit:
     enabled: true
     format: '&8[&c-&8] &7%player%'
-  no-permission: '&cBu komutu kullanma yetkiniz yok!'
-  lobby-welcome: '&aHoş geldiniz! &7Şu anda &e%lobby% &7lobisindesiniz.'
-  lobby-not-found: '&cLobi bulunamadı!'
-  lobby-set: '&aLobi konumu &e%lobby% &aiçin ayarlandı!'
-  invalid-lobby: '&cGeçersiz lobi ID!'
-  lobby-full: '&cBu lobi dolu!'
-  server-transfer: '&aSunucuya aktarılıyorsunuz...'
-  transfer-failed: '&cSunucuya bağlanılamadı!'
-  server-online: '&aAKTİF'
-  server-offline: '&cKAPALI'
-  server-info: '&eBu sunucuya gitmek için &b/server %server%&e komutunu kullanın.'
-  chat-locked: '&cSohbet şu anda kilitli! Sadece yetkililer konuşabilir.'
-  chat-locked-broadcast: '&c&lSohbet kilitlendi! Sadece yetkililer konuşabilir.'
-  chat-unlocked-broadcast: '&a&lSohbet kilidi açıldı! Herkes konuşabilir.'
+  no-permission: '&cYou don''t have permission to use this command!'
+  lobby-welcome: '&aWelcome! &7You are now in the &e%lobby% &7lobby.'
+  lobby-not-found: '&cLobby not found!'
+  lobby-set: '&aLobby location for &e%lobby% &ahas been set!'
+  invalid-lobby: '&cInvalid lobby ID!'
+  lobby-full: '&cThis lobby is full!'
+  server-transfer: '&aConnecting to server...'
+  transfer-failed: '&cCould not connect to the server!'
+  server-online: '&aONLINE'
+  server-offline: '&cOFFLINE'
+  server-info: '&eTo join this server, use &b/server %server%&e.'
+  chat-locked: '&cThe chat is currently locked! Only staff can talk.'
+  chat-locked-broadcast: '&c&lChat has been locked! Only staff can talk.'
+  chat-unlocked-broadcast: '&a&lChat has been unlocked! Everyone can talk.'
   chat-lock-format: '&8[&e!&8] %message% &7(%announcer%)'
 
 lobbies:
   main:
-    display-name: '&aAna Lobi'
+    display-name: '&aMain Lobby'
     description:
-      - '&7Ana lobi'
-      - '&7Buradan oyunlara katılabilirsiniz.'
+      - '&7Main lobby'
+      - '&7Join games from here.'
     max-players: 100
     visible: true
     slot: 0
@@ -82,10 +82,10 @@ lobbies:
       yaw: 0.0
       pitch: 0.0
   vip:
-    display-name: '&6VIP Lobi'
+    display-name: '&6VIP Lobby'
     description:
-      - '&7VIP oyuncular için özel lobi'
-      - '&7Burada özel oyunlara katılabilirsiniz.'
+      - '&7Special lobby for VIP players'
+      - '&7Join exclusive games from here.'
     max-players: 50
     visible: true
     slot: 1
@@ -109,8 +109,8 @@ servers:
   survival:
     display-name: '&aSurvival'
     description:
-      - '&7Survival oyun modu'
-      - '&7Oyuncu sayısı: &e%player_count%'
+      - '&7Survival gamemode'
+      - '&7Players: &e%player_count%'
     server-name: 'survival'
     address: '127.0.0.1'
     port: 25566
@@ -126,8 +126,8 @@ servers:
   skyblock:
     display-name: '&bSkyBlock'
     description:
-      - '&7SkyBlock oyun modu'
-      - '&7Oyuncu sayısı: &e%player_count%'
+      - '&7SkyBlock gamemode'
+      - '&7Players: &e%player_count%'
     server-name: 'skyblock'
     address: '127.0.0.1'
     port: 25567
@@ -145,31 +145,31 @@ items:
   server-selector:
     material: 'COMPASS'
     custom-model-data: 3001
-    display-name: '&eSunucu Seçici'
+    display-name: '&eServer Selector'
     slot: 0
     permission: ''
     lore:
-      - '&7Sunucu seçmek için tıkla'
+      - '&7Click to select a server'
   lobby-selector:
     material: 'NETHER_STAR'
     custom-model-data: 3002
-    display-name: '&bLobi Seçici'
+    display-name: '&bLobby Selector'
     slot: 1
     permission: ''
     lore:
-      - '&7Lobi seçmek için tıkla'
+      - '&7Click to select a lobby'
   player-hider:
     material: 'BLAZE_POWDER'
     custom-model-data: 3003
-    display-name: '&cOyuncu Gizleyici'
+    display-name: '&cPlayer Visibility'
     slot: 8
     permission: ''
     lore:
-      - '&7Oyuncuları görmek/gizlemek için tıkla'
+      - '&7Click to toggle player visibility'
 
 menus:
   server-selector:
-    title: '&8» &eSunucu Seçici'
+    title: '&8» &eServer Selector'
     size: 27
     fill-empty: true
     empty-material: 'GRAY_STAINED_GLASS_PANE'
@@ -177,7 +177,7 @@ menus:
     auto-refresh-player-count: true
     status-format: '&8[%status%&8]'
   lobby-selector:
-    title: '&8» &bLobi Seçici'
+    title: '&8» &bLobby Selector'
     size: 27
     fill-empty: true
     empty-material: 'LIGHT_BLUE_STAINED_GLASS_PANE'
@@ -191,7 +191,7 @@ effects:
 vip-messages:
   vip:
     permission: 'hubcore.vip'
-    format: '&6★ &e%player% &6sunucuya katıldı! &6★'
+    format: '&6★ &e%player% &6joined the server! &6★'
     broadcast: true
     play-sound: true
     sound: 'entity.player.levelup'
@@ -199,11 +199,11 @@ vip-messages:
     sound-pitch: 1.0
   mvp:
     permission: 'hubcore.mvp'
-    format: '&b✦ &3%player% &bsunucuya katıldı! &b✦'
+    format: '&b✦ &3%player% &bjoined the server! &b✦'
     messages:
-      - '&b✦ &3%player% &bsunucuya katıldı! &b✦'
-      - '&b✧ &3%player% &barena savaşlarına hazır! &b✧'
-      - '&b✩ &3%player% &badlı MVP &blobideki yerini aldı! &b✩'
+      - '&b✦ &3%player% &bjoined the server! &b✦'
+      - '&b✧ &3%player% &bis ready for battle! &b✧'
+      - '&b✩ &3%player% &bthe MVP has arrived! &b✩'
     broadcast: true
     play-sound: true
     sound: 'entity.player.levelup'
@@ -211,7 +211,7 @@ vip-messages:
     sound-pitch: 1.2
   admin:
     permission: 'hubcore.admin'
-    format: '&c&l⚠ &4%player% &c&lsunucuya katıldı! &c&l⚠'
+    format: '&c&l⚠ &4%player% &c&ljoined the server! &c&l⚠'
     broadcast: true
     play-sound: true
     sound: 'entity.player.levelup'
@@ -223,7 +223,7 @@ announcements:
   interval: 300
   initial-delay: 60
   random: false
-  prefix: '&8[&e&lDUYURU&8]'
+  prefix: '&8[&e&lANNOUNCEMENT&8]'
   sound:
     enabled: true
     name: 'entity.player.levelup'
@@ -234,16 +234,15 @@ announcements:
     - '%prefix% &f%message%'
     - ''
   messages:
-    - '&eSunucumuzda &6VIP &eolun! &6/vip &eiçin tıklayın!'
-    - '&bDiscord sunucumuza katılın! &3discord.gg/yourservername'
-    - '&aArkadaşlarınızı davet etmeyi unutmayın!'
-    - '&dOyun kurallarını okumayı unutmayın! &5/rules'
-    - '&6Günlük ödüllerinizi almayı unutmayın! &e/daily'
-
+    - '&eBecome &6VIP &eon our server! Type &6/vip &eto learn more!'
+    - '&bJoin our Discord server! &3discord.gg/yourservername'
+    - '&aInvite your friends to join the server!'
+    - '&dDon''t forget to read the rules! &5/rules'
+    - '&6Claim your daily rewards! &e/daily'
 
 npcs:
   welcome:
-    name: '&e&lHoş Geldiniz'
+    name: '&e&lWelcome'
     world: 'spawn'
     x: -113
     y: 63
@@ -253,10 +252,10 @@ npcs:
     skin: 'Steve'
     skin-name: ''
     skin-signature: ''
-    command: 'message:&aHubCore sunucusuna hoş geldiniz!'
+    command: 'message:&aWelcome to HubCore server!'
     look-at-player: true
     hologram: true
     hologram-lines:
-      - '&e&lSunucu Rehberi'
-      - '&fBana tıklayarak'
-      - '&fyardım alabilirsiniz'
+      - '&e&lServer Guide'
+      - '&fClick on me'
+      - '&ffor help'

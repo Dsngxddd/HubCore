@@ -28,12 +28,8 @@ public class HubCore extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-
-        // Temel konfigürasyon ve mesajlaşma kanalları
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", (channel, player, message) -> {});
-
-        // Temel manager'lar
         this.commandHelper = new CommandHelper(this);
         this.configManager = new ConfigManager(this);
         this.lobbyManager = new LobbyManager(this);
@@ -46,15 +42,10 @@ public class HubCore extends JavaPlugin {
         this.vipManager = new VIPManager(this);
         this.particleManager = new ParticleManager(this);
         registerCommands();
-        // Temel listener'ları kaydet (NPC dışındakiler)
         registerBasicListeners();
-
-        // Database bağlantısı
         if (getConfig().getBoolean("mysql.enabled")) {
             setupDatabase();
         }
-
-        // Announcement manager
         this.announcementManager = new AnnouncementManager(this);
 
         setupNPCSystem();
@@ -65,20 +56,15 @@ public class HubCore extends JavaPlugin {
         if (getConfig().getBoolean("mysql.enabled")) {
             DatabaseManager.getInstance().disconnect();
         }
-
-        // Stop the announcement task
         if (announcementManager != null) {
             announcementManager.stopAnnouncementTask();
         }
-
-        // Shutdown NPC system
         if (npcManager != null) {
             npcManager.shutdown();
         }
 
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this, "BungeeCord");
-        getLogger().info("HubCore devre dışı bırakıldı!");
     }
 
     private void registerBasicListeners() {
@@ -90,40 +76,18 @@ public class HubCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(chatListener, this);
     }
     private void setupNPCSystem() {
-        getLogger().info("NPC sistemi hazırlanıyor...");
-
-        boolean npcSystemEnabled = false;
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
             try {
-                getLogger().info("ProtocolLib bulundu. NPCManager oluşturuluyor...");
                 this.npcManager = new NPCManager(this);
-
-                // NPCManager oluşturulduktan sonra ProtocolManager'ın düzgün başlatılıp başlatılmadığını kontrol et
                 if (this.npcManager != null && this.npcManager.isEnabled()) {
-                    getLogger().info("NPCManager başarıyla oluşturuldu. NPCListener oluşturuluyor...");
                     this.npcListener = new NPCListener(this);
                     if (this.npcListener != null) {
                         getServer().getPluginManager().registerEvents(this.npcListener, this);
-                        npcSystemEnabled = true;
-                        getLogger().info("NPCListener başarıyla kaydedildi.");
-                    } else {
-                        getLogger().severe("NPCListener oluşturulamadı!");
                     }
-                } else {
-                    getLogger().severe("NPCManager aktif değil veya düzgün başlatılamadı!");
                 }
             } catch (Exception e) {
-                getLogger().severe("NPC sistemi yüklenemedi: " + e.getMessage());
                 e.printStackTrace();
             }
-        } else {
-            getLogger().warning("ProtocolLib bulunamadı! NPC sistemi devre dışı bırakıldı.");
-        }
-
-        if (npcSystemEnabled) {
-            getLogger().info("NPC sistemi başarıyla etkinleştirildi!");
-        } else {
-            getLogger().warning("NPC sistemi etkinleştirilemedi. NPC'ler çalışmayabilir.");
         }
     }
 
@@ -135,8 +99,6 @@ public class HubCore extends JavaPlugin {
         getCommand("multihubreload").setExecutor(new ReloadCommand(this));
         getCommand("chatlock").setExecutor(new ChatLockCommand(this));
         getCommand("announce").setExecutor(new AnnounceCommand(this));
-
-        // NPC komutunu sadece npcManager varsa kaydet
         if (getCommand("npc") != null && this.npcManager != null) {
             NPCCommand npcCommand = new NPCCommand(this);
             getCommand("npc").setExecutor(npcCommand);
@@ -159,7 +121,6 @@ public class HubCore extends JavaPlugin {
         return instance;
     }
 
-    // Getter metodları
     public CommandHelper getCommandHelper() { return commandHelper; }
     public ChatListener getChatListener() { return chatListener; }
     public PlayerHiderManager getPlayerHiderManager() { return playerHiderManager; }
